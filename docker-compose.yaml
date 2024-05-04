@@ -1,0 +1,29 @@
+version: '3'
+services:
+
+  db:
+    image: postgres:latest
+    container_name: db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: moneron
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  server:
+    build:
+      dockerfile: server/Dockerfile
+    container_name: server
+    image: moneron
+    ports:
+      - "8083:8083"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
