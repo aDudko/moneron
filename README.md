@@ -2,6 +2,7 @@
 
 
 <p>Backend: <strong>Spring Boot + Java</strong></p>
+<p>Frontend: <strong>Vite + React, React Router and Redux Toolkit</strong></p>
 <p>Database: <strong>Postgres</strong></p>
 
 
@@ -9,4 +10,7 @@
 and get URL <code>localhost:8083</code>. Also you can see REST API Documentation in URL: 
 <code>localhost:8083/swagger-ui/index.html</code></p>
 
-<h2>In progress</h2>
+<p>In file <code>moneron.postman_collection.json</code>code you can see 
+simple REST API requests for example. Import this into your <strong>Postman</strong> =)</p>
+
+<h2>Frontend in progress</h2>
