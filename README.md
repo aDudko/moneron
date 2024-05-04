@@ -1,4 +1,4 @@
-<h1>Personal Journal</h1>
+<h1>Moneron</h1>
 
 
 <p>Backend: <strong>Spring Boot + Java</strong></p>
