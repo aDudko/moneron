@@ -13,9 +13,9 @@ public class CorsConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Применить настройки ко всем URL
-                        .allowedOrigins("*") // Разрешить доступ со всех источников
-                        .allowedMethods("*"); // Разрешить все HTTP методы
+                registry.addMapping("/**") // Apply settings to all URLs
+                        .allowedOrigins("*") // Allow access to all sources
+                        .allowedMethods("*"); // Allow all HTTP methods
             }
         };
     }
