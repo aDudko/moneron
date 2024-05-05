@@ -2,7 +2,7 @@
 
 
 <p>Backend: <strong>Spring Boot + Java</strong></p>
-<p>Frontend: <strong>Vite + React, React Router and Redux Toolkit</strong></p>
+<p>Frontend: <strong></strong></p>
 <p>Database: <strong>Postgres</strong></p>
 
 
