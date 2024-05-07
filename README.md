@@ -1,7 +1,7 @@
 <h1>Moneron</h1>
 
 
-<p>Backend: <strong>Spring Boot + Java</strong> (using database authorisation)</p>
+<p>Backend: <strong>Java + Spring Boot + Spring Security</strong> (using database authorisation)</p>
 <p>Frontend: <strong></strong></p>
 <p>Database: <strong>Postgres</strong></p>
 
