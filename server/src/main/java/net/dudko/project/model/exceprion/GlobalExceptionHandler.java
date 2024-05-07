@@ -26,6 +26,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(MoneronAPIException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorDetails> handleMoneronAPIException(
+            MoneronAPIException exception,
+            WebRequest webRequest) {
+        var errorDetails = ErrorDetails.builder()
+                .message(exception.getMessage())
+                .errorCode("BAD_REQUEST")
+                .timestamp(LocalDateTime.now())
+                .details(webRequest.getDescription(false))
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorDetails> handleGenericException(
