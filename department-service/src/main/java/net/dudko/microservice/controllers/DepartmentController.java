@@ -50,10 +50,24 @@ public class DepartmentController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @GetMapping("/{id}")
-    public ResponseEntity<DepartmentDto> getDepartment(@PathVariable Long id) {
+    @GetMapping("{id}")
+    public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id) {
         var department = departmentService.getById(id);
         return ResponseEntity.ok(department);
+    }
+
+    @Operation(
+            summary = "GET Department REST API",
+            description = "Get Department REST API to get Department by code"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS 200 OK"
+    )
+    @GetMapping("code/{code}")
+    public ResponseEntity<DepartmentDto> getDepartmentByCode(@PathVariable String code) {
+        DepartmentDto departmentDto = departmentService.getByCode(code);
+        return new ResponseEntity<>(departmentDto, HttpStatus.OK);
     }
 
     @Operation(
@@ -78,7 +92,7 @@ public class DepartmentController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<DepartmentDto> updateDepartment(@PathVariable Long id,
                                                           @RequestBody DepartmentDto departmentDto) {
         var department = departmentService.update(id, departmentDto);

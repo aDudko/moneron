@@ -10,6 +10,8 @@ public interface DepartmentService {
 
     DepartmentDto getById(Long id);
 
+    DepartmentDto getByCode(String code);
+
     List<DepartmentDto> getAll();
 
     DepartmentDto update(Long id, DepartmentDto departmentDto);
