@@ -26,10 +26,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MoneronAPIException.class)
+    @ExceptionHandler(ExpenseTrackerAPIException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorDetails> handleMoneronAPIException(
-            MoneronAPIException exception,
+    public ResponseEntity<ErrorDetails> handleExpenseTrackerAPIException(
+            ExpenseTrackerAPIException exception,
             WebRequest webRequest) {
         var errorDetails = ErrorDetails.builder()
                 .message(exception.getMessage())

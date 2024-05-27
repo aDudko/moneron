@@ -25,26 +25,35 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategory(Long id) {
-        var category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        var category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
         return CategoryMapper.mapToCategoryDto(category);
     }
 
     @Override
     public List<CategoryDto> getCategories() {
         var categories = categoryRepository.findAll();
-        return categories.stream().map(CategoryMapper::mapToCategoryDto).toList();
+        return categories
+                .stream()
+                .map(CategoryMapper::mapToCategoryDto)
+                .toList();
     }
 
     @Override
     public CategoryDto updateCategory(Long id, CategoryDto categoryDto) {
-        var category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        var category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
         category.setName(categoryDto.name());
         return CategoryMapper.mapToCategoryDto(categoryRepository.save(category));
     }
 
     @Override
     public void deleteCategory(Long id) {
-        var category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
+        var category = categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id: " + id));
         categoryRepository.delete(category);
     }
 

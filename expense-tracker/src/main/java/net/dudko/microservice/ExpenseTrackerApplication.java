@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Moneron",
-                description = "Moneron REST API Documentation",
+                title = "Expense tracker",
+                description = "Expense tracker REST API Documentation",
                 version = "v1.0",
                 contact = @Contact(
                         name = "Dudko Anatol",

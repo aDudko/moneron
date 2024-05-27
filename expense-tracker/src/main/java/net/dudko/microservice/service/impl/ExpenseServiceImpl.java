@@ -26,7 +26,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseDto getExpenseById(Long id) {
-        var expense = expenseRepository.findById(id)
+        var expense = expenseRepository
+                .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
         return ExpenseMapper.maptoExpenseDto(expense);
     }

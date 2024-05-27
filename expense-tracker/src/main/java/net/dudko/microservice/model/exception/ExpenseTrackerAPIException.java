@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class MoneronAPIException extends RuntimeException {
+public class ExpenseTrackerAPIException extends RuntimeException {
 
-    public MoneronAPIException(String message) {
+    public ExpenseTrackerAPIException(String message) {
         super(message);
     }
 

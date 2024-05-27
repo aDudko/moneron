@@ -7,6 +7,17 @@ import net.dudko.microservice.model.dto.ExpenseDto;
 
 public class ExpenseMapper {
 
+    public static Expense mapToExpense(ExpenseDto expenseDto) {
+        return Expense.builder()
+                .id(expenseDto.id())
+                .amount(expenseDto.amount())
+                .expenseDate(expenseDto.expenseDate())
+                .category(Category.builder()
+                        .id(expenseDto.categoryDto().id())
+                        .build())
+                .build();
+    }
+
     public static ExpenseDto maptoExpenseDto(Expense expense) {
         return new ExpenseDto(
                 expense.getId(),
@@ -17,17 +28,6 @@ public class ExpenseMapper {
                         expense.getCategory().getName()
                 )
         );
-    }
-
-    public static Expense mapToExpense(ExpenseDto expenseDto) {
-        return Expense.builder()
-                .id(expenseDto.id())
-                .amount(expenseDto.amount())
-                .expenseDate(expenseDto.expenseDate())
-                .category(Category.builder()
-                        .id(expenseDto.categoryDto().id())
-                        .build())
-                .build();
     }
 
 }

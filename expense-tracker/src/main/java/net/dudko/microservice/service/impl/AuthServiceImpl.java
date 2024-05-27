@@ -8,7 +8,7 @@ import net.dudko.microservice.domain.repository.RoleRepository;
 import net.dudko.microservice.domain.repository.UserRepository;
 import net.dudko.microservice.model.dto.LoginDto;
 import net.dudko.microservice.model.dto.RegisterDto;
-import net.dudko.microservice.model.exception.MoneronAPIException;
+import net.dudko.microservice.model.exception.ExpenseTrackerAPIException;
 import net.dudko.microservice.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
@@ -32,10 +32,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String register(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new MoneronAPIException("UserName already exists!");
+            throw new ExpenseTrackerAPIException("Name of user already exists!");
         }
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new MoneronAPIException("Email already exists!");
+            throw new ExpenseTrackerAPIException("Email already exists!");
         }
         User user = User.builder()
                 .name(registerDto.getName())
