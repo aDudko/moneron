@@ -5,6 +5,7 @@ import net.dudko.microservice.domain.mapper.DepartmentMapper;
 import net.dudko.microservice.domain.repository.DepartmentRepository;
 import net.dudko.microservice.model.dto.DepartmentDto;
 import net.dudko.microservice.model.exception.DepartmentServiceAPIException;
+import net.dudko.microservice.model.exception.ResourceDuplicatedException;
 import net.dudko.microservice.model.exception.ResourceNotFoundException;
 import net.dudko.microservice.service.DepartmentService;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentDto create(DepartmentDto departmentDto) {
         if (departmentRepository.existsByCode(departmentDto.getCode())) {
-            throw new DepartmentServiceAPIException("Code of department already exists!");
+            throw new ResourceDuplicatedException("Code of department already exists!");
         }
         var inDb = departmentRepository.save(DepartmentMapper.mapToDepartment(departmentDto));
         return DepartmentMapper.mapToDepartmentDto(inDb);

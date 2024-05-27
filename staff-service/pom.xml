@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>net.dudko.microservice</groupId>
-	<artifactId>employee-service</artifactId>
+	<artifactId>staff-service</artifactId>
 	<version>0.0.1</version>
-	<name>employee-service</name>
-	<description>Microservice for employees management of Moneron</description>
+	<name>staff-service</name>
+	<description>Microservice for staff management of Moneron</description>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -30,6 +30,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- REST API DOCUMENTATION -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${swagger.version}</version>
 		</dependency>
 
 		<!-- DATABASE -->
@@ -74,7 +81,7 @@
 				<version>${spring.version}</version>
 				<configuration>
 					<excludeDockerCompose>false</excludeDockerCompose>
-					<mainClass>net.dudko.microservice.EmployeeServiceApplication</mainClass>
+					<mainClass>net.dudko.microservice.StaffServiceApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

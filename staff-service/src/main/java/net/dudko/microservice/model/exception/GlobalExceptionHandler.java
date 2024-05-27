@@ -41,10 +41,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(DepartmentServiceAPIException.class)
+    @ExceptionHandler(StaffServiceAPIException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorDetails> handleDepartmentServiceAPIException(
-            DepartmentServiceAPIException exception,
+    public ResponseEntity<ErrorDetails> handleStaffServiceAPIException(
+            StaffServiceAPIException exception,
             WebRequest webRequest) {
         var errorDetails = ErrorDetails.builder()
                 .message(exception.getMessage())
