@@ -1,6 +1,5 @@
 package net.dudko.microservice.service;
 
-
 import net.dudko.microservice.model.dto.LoginDto;
 import net.dudko.microservice.model.dto.RegisterDto;
 

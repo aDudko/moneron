@@ -20,6 +20,7 @@ services:
     build:
       dockerfile: department-service/Dockerfile
     container_name: department-service
+    image: moneron
     ports:
       - "8081:8081"
     depends_on:
@@ -29,6 +30,7 @@ services:
     build:
       dockerfile: staff-service/Dockerfile
     container_name: staff-service
+    image: moneron
     ports:
       - "8082:8082"
     depends_on:
@@ -41,6 +43,16 @@ services:
     image: moneron
     ports:
       - "8083:8083"
+    depends_on:
+      - db
+
+  auth-service:
+    build:
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
+    image: moneron
+    ports:
+      - "8087:8087"
     depends_on:
       - db
 

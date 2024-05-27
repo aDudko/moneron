@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -11,10 +10,10 @@
     </parent>
 
     <groupId>net.dudko.microservice</groupId>
-    <artifactId>expense-tracker</artifactId>
-    <version>0.0.2</version>
-    <name>expense-tracker</name>
-    <description>Microservice for expense tracker of Moneron</description>
+    <artifactId>auth-service</artifactId>
+    <version>0.0.1</version>
+    <name>auth-service</name>
+    <description>Microservice for authenticate of Moneron</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -25,7 +24,6 @@
     </properties>
 
     <dependencies>
-
         <!-- REST API -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,6 +46,12 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- SECURITY -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
         <!-- VIRTUALIZATION -->
@@ -74,7 +78,7 @@
                 <version>${spring.version}</version>
                 <configuration>
                     <excludeDockerCompose>false</excludeDockerCompose>
-                    <mainClass>net.dudko.microservice.ExpenseTrackerApplication</mainClass>
+                    <mainClass>net.dudko.microservice.AuthServiceApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

@@ -1,14 +1,13 @@
 package net.dudko.microservice.service.impl;
 
 import lombok.AllArgsConstructor;
-
 import net.dudko.microservice.domain.entity.Role;
 import net.dudko.microservice.domain.entity.User;
 import net.dudko.microservice.domain.repository.RoleRepository;
 import net.dudko.microservice.domain.repository.UserRepository;
 import net.dudko.microservice.model.dto.LoginDto;
 import net.dudko.microservice.model.dto.RegisterDto;
-import net.dudko.microservice.model.exception.ExpenseTrackerAPIException;
+import net.dudko.microservice.model.exception.AuthServiceAPIException;
 import net.dudko.microservice.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,10 +31,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String register(RegisterDto registerDto) {
         if (userRepository.existsByUsername(registerDto.getUsername())) {
-            throw new ExpenseTrackerAPIException("Name of user already exists!");
+            throw new AuthServiceAPIException("Name of user already exists!");
         }
         if (userRepository.existsByEmail(registerDto.getEmail())) {
-            throw new ExpenseTrackerAPIException("Email already exists!");
+            throw new AuthServiceAPIException("Email already exists!");
         }
         User user = User.builder()
                 .name(registerDto.getName())
