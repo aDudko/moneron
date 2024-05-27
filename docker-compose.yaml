@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
 
   db:
@@ -15,10 +16,28 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  server:
+  department-service:
     build:
-      dockerfile: server/Dockerfile
-    container_name: server
+      dockerfile: department-service/Dockerfile
+    container_name: department-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - db
+
+  employee-service:
+    build:
+      dockerfile: employee-service/Dockerfile
+    container_name: employee-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+
+  expense-tracker:
+    build:
+      dockerfile: expense-tracker/Dockerfile
+    container_name: expense-tracker
     image: moneron
     ports:
       - "8083:8083"
