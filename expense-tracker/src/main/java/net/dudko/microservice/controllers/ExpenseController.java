@@ -24,7 +24,7 @@ import java.util.List;
 )
 @AllArgsConstructor
 @RestController
-@RequestMapping("/expense")
+@RequestMapping("expense")
 public class ExpenseController {
 
     private final ExpenseService expenseService;
@@ -51,7 +51,7 @@ public class ExpenseController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<ExpenseDto> getExpense(@PathVariable Long id) {
         var expense = expenseService.getExpenseById(id);
         return ResponseEntity.ok(expense);
@@ -79,7 +79,7 @@ public class ExpenseController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<ExpenseDto> updateExpense(@PathVariable Long id,
                                                     @RequestBody ExpenseDto expenseDto) {
         var expense = expenseService.updateExpense(id, expenseDto);
@@ -94,7 +94,7 @@ public class ExpenseController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
         expenseService.deleteExpense(id);
         return ResponseEntity.ok("Expense deleted");

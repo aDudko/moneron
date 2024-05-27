@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 )
 @AllArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
 
     private final AuthService authService;
@@ -32,7 +32,7 @@ public class AuthController {
             responseCode = "201",
             description = "HTTP STATUS 201 CREATED"
     )
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
     }
@@ -44,7 +44,7 @@ public class AuthController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
         return ResponseEntity.ok(authService.login(loginDto));
     }

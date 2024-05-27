@@ -23,7 +23,7 @@ import java.util.List;
 )
 @AllArgsConstructor
 @RestController
-@RequestMapping("/department")
+@RequestMapping("department")
 public class DepartmentController {
 
     private final DepartmentService departmentService;

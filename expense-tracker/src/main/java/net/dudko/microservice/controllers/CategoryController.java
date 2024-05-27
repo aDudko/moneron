@@ -24,7 +24,7 @@ import java.util.List;
 )
 @AllArgsConstructor
 @RestController
-@RequestMapping("/category")
+@RequestMapping("category")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -51,7 +51,7 @@ public class CategoryController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Long id) {
         return ResponseEntity.ok(categoryService.getCategory(id));
     }
@@ -77,7 +77,7 @@ public class CategoryController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id,
                                                       @RequestBody CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.updateCategory(id, categoryDto));
@@ -91,7 +91,7 @@ public class CategoryController {
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok("Category deleted successfully");
