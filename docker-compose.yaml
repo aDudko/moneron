@@ -29,6 +29,14 @@ services:
     networks:
       - rabbitmq
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    environment:
+      - "STORAGE_TYPE=mem"
+    ports:
+      - "9411:9411"
+
 networks:
   rabbitmq:
     driver: bridge
