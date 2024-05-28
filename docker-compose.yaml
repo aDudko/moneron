@@ -16,45 +16,22 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  department-service:
-    build:
-      dockerfile: department-service/Dockerfile
-    container_name: department-service
-    image: moneron
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
     ports:
-      - "8081:8081"
-    depends_on:
-      - db
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq
 
-  staff-service:
-    build:
-      dockerfile: staff-service/Dockerfile
-    container_name: staff-service
-    image: moneron
-    ports:
-      - "8082:8082"
-    depends_on:
-      - db
-
-  expense-tracker:
-    build:
-      dockerfile: expense-tracker/Dockerfile
-    container_name: expense-tracker
-    image: moneron
-    ports:
-      - "8083:8083"
-    depends_on:
-      - db
-
-  auth-service:
-    build:
-      dockerfile: auth-service/Dockerfile
-    container_name: auth-service
-    image: moneron
-    ports:
-      - "8087:8087"
-    depends_on:
-      - db
+networks:
+  rabbitmq:
+    driver: bridge
 
 volumes:
   postgres_data:
