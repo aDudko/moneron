@@ -39,4 +39,6 @@ public class Staff {
     @Column(nullable = false)
     private StaffStatus status;
 
+    private String departmentCode;
+
 }

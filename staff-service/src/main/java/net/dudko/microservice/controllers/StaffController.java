@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import net.dudko.microservice.model.dto.ApiResponseDto;
 import net.dudko.microservice.model.dto.StaffDto;
 import net.dudko.microservice.service.StaffService;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class StaffController {
 
     @Operation(
             summary = "CREATE staffDto REST API",
-            description = "Create Staff REST API to save Staff"
+            description = "Create Staff REST API to save Employee"
     )
     @ApiResponse(
             responseCode = "201",
@@ -46,21 +47,21 @@ public class StaffController {
 
     @Operation(
             summary = "GET Staff REST API",
-            description = "Get Staff REST API to get Staff by ID"
+            description = "Get Staff REST API to get Employee by ID with Department"
     )
     @ApiResponse(
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
     @GetMapping("{id}")
-    public ResponseEntity<StaffDto> getEmployeeById(@PathVariable Long id) {
-        var staff = staffService.getById(id);
-        return ResponseEntity.ok(staff);
+    public ResponseEntity<ApiResponseDto> getEmployeeById(@PathVariable Long id) {
+        var response = staffService.getById(id);
+        return ResponseEntity.ok(response);
     }
 
     @Operation(
-            summary = "GET all Staff REST API",
-            description = "Get all Staff REST API to get all Staff"
+            summary = "GET Staff REST API",
+            description = "Get Staff REST API to get Staff"
     )
     @ApiResponse(
             responseCode = "200",
@@ -74,7 +75,7 @@ public class StaffController {
 
     @Operation(
             summary = "UPDATE Staff REST API",
-            description = "Update Staff REST API to update Staff"
+            description = "Update Staff REST API to update Employee"
     )
     @ApiResponse(
             responseCode = "200",
@@ -89,7 +90,7 @@ public class StaffController {
 
     @Operation(
             summary = "DELETE Staff REST API",
-            description = "Delete Staff REST API to update Staff"
+            description = "Delete Staff REST API to update Employee"
     )
     @ApiResponse(
             responseCode = "200",
@@ -98,7 +99,7 @@ public class StaffController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         staffService.delete(id);
-        return ResponseEntity.ok("Staff deleted successfully");
+        return ResponseEntity.ok("Employee deleted successfully");
     }
 
 }

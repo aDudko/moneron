@@ -40,4 +40,9 @@ public class StaffDto {
     )
     private StaffStatus status;
 
+    @Schema(
+            description = "Code of department to which the employee is assigned"
+    )
+    private String departmentCode;
+
 }
