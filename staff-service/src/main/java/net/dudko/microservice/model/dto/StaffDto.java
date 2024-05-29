@@ -45,4 +45,9 @@ public class StaffDto {
     )
     private String departmentCode;
 
+    @Schema(
+            description = "Code of office to which the employee is assigned"
+    )
+    private String officeCode;
+
 }

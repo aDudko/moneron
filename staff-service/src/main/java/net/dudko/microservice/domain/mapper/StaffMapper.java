@@ -13,6 +13,7 @@ public class StaffMapper {
                 .email(staffDto.getEmail())
                 .status(staffDto.getStatus())
                 .departmentCode(staffDto.getDepartmentCode())
+                .officeCode(staffDto.getOfficeCode())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class StaffMapper {
                 .email(staff.getEmail())
                 .status(staff.getStatus())
                 .departmentCode(staff.getDepartmentCode())
+                .officeCode(staff.getOfficeCode())
                 .build();
     }
 

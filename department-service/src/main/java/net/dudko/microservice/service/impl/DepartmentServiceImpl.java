@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import net.dudko.microservice.domain.mapper.DepartmentMapper;
 import net.dudko.microservice.domain.repository.DepartmentRepository;
 import net.dudko.microservice.model.dto.DepartmentDto;
-import net.dudko.microservice.model.exception.DepartmentServiceAPIException;
 import net.dudko.microservice.model.exception.ResourceDuplicatedException;
 import net.dudko.microservice.model.exception.ResourceNotFoundException;
 import net.dudko.microservice.service.DepartmentService;

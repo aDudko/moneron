@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>net.dudko.microservice</groupId>
-	<artifactId>department-service</artifactId>
+	<artifactId>office-service</artifactId>
 	<version>0.0.1</version>
-	<name>department-service</name>
-	<description>Microservice for department management of Moneron</description>
+	<name>office-service</name>
+	<description>Microservice for office management of Moneron</description>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -129,7 +129,7 @@
 				<version>${spring.version}</version>
 				<configuration>
 					<excludeDockerCompose>false</excludeDockerCompose>
-					<mainClass>net.dudko.microservice.DepartmentServiceApplication</mainClass>
+					<mainClass>net.dudko.microservice.OfficeServiceApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

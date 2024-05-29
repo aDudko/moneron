@@ -25,4 +25,9 @@ public class ApiResponseDto {
     )
     private DepartmentDto departmentDto;
 
+    @Schema(
+            description = "Associate with OfficeDto"
+    )
+    private OfficeDto officeDto;
+
 }
