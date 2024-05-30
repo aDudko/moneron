@@ -11,6 +11,8 @@ public interface StaffService {
 
     ApiResponseDto getById(Long id);
 
+    StaffDto getByEmail(String email);
+
     List<StaffDto> getAll();
 
     StaffDto update(Long id, StaffDto staffDto);

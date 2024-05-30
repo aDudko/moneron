@@ -32,7 +32,7 @@ public class StaffController {
     private final StaffService staffService;
 
     @Operation(
-            summary = "CREATE staffDto REST API",
+            summary = "CREATE Staff REST API",
             description = "Create Staff REST API to save Employee"
     )
     @ApiResponse(
@@ -47,7 +47,7 @@ public class StaffController {
 
     @Operation(
             summary = "GET Staff REST API",
-            description = "Get Staff REST API to get Employee by ID with Department"
+            description = "Get Staff REST API to get Employee by ID with Department and Office"
     )
     @ApiResponse(
             responseCode = "200",
@@ -56,6 +56,20 @@ public class StaffController {
     @GetMapping("{id}")
     public ResponseEntity<ApiResponseDto> getEmployeeById(@PathVariable Long id) {
         var response = staffService.getById(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(
+            summary = "GET Staff REST API",
+            description = "Get Staff REST API to get Employee by email"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS 200 OK"
+    )
+    @GetMapping("email/{email}")
+    public ResponseEntity<StaffDto> getEmployeeByEmail(@PathVariable String email) {
+        var response = staffService.getByEmail(email);
         return ResponseEntity.ok(response);
     }
 
