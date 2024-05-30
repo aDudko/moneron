@@ -5,7 +5,7 @@ import net.dudko.microservice.model.dto.DepartmentDto;
 
 public class TestUtil {
 
-    public static Department getValidDepartment() {
+    public static Department getValidEntity() {
         return Department.builder()
                 .id(1L)
                 .name("Test Department Default. Name")
@@ -14,7 +14,7 @@ public class TestUtil {
                 .build();
     }
 
-    public static DepartmentDto getValidDepartmentDto() {
+    public static DepartmentDto getValidDto() {
         return DepartmentDto.builder()
                 .id(1L)
                 .name("Test Department Default. Name")

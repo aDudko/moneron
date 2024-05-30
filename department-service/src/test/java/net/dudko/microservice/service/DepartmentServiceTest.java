@@ -45,8 +45,8 @@ class DepartmentServiceTest {
 
     @BeforeEach
     public void setup() {
-        entity = TestUtil.getValidDepartment();
-        dto = TestUtil.getValidDepartmentDto();
+        entity = TestUtil.getValidEntity();
+        dto = TestUtil.getValidDto();
     }
 
     @AfterEach

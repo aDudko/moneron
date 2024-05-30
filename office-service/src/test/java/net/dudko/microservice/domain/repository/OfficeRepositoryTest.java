@@ -2,9 +2,9 @@ package net.dudko.microservice.domain.repository;
 
 import net.dudko.microservice.AbstractContainerBaseTest;
 import net.dudko.microservice.TestUtil;
-import net.dudko.microservice.domain.entity.Department;
-import org.junit.jupiter.api.BeforeEach;
+import net.dudko.microservice.domain.entity.Office;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,24 +13,25 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-class DepartmentRepositoryTest extends AbstractContainerBaseTest {
+class OfficeRepositoryTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "DEPARTMENT-MICROSERVICE: DEPARTMENT-REPOSITORY: ";
+    private static final String testNamePrefix = "OFFICE-MICROSERVICE: OFFICE-REPOSITORY: ";
 
     private final TestEntityManager entityManager;
-    private final DepartmentRepository repository;
+    private final OfficeRepository repository;
 
-    private Department entity;
+    private Office entity;
 
     @Autowired
-    DepartmentRepositoryTest(TestEntityManager entityManager,
-                             DepartmentRepository repository) {
+    OfficeRepositoryTest(TestEntityManager entityManager,
+                         OfficeRepository repository) {
         this.entityManager = entityManager;
         this.repository = repository;
     }
@@ -48,34 +49,35 @@ class DepartmentRepositoryTest extends AbstractContainerBaseTest {
 
     @Test
     @DisplayName(testNamePrefix + "Test for check exist by code")
-    public void givenExistByCode_whenDepartmentExist_thenReturnTrue() {
+    public void givenExistByCode_whenOfficeExist_thenReturnTrue() {
         entityManager.persist(entity);
         assertTrue(repository.existsByCode(entity.getCode()));
     }
 
     @Test
     @DisplayName(testNamePrefix + "Test for check not exist by code")
-    public void givenExistByCode_whenDepartmentNotExist_thenReturnFalse() {
+    public void givenExistByCode_whenOfficeNotExist_thenReturnFalse() {
         entityManager.persist(entity);
         assertFalse(repository.existsByCode("DDT"));
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find exist department by code")
-    public void givenFindByCode_whenDepartmentExist_thenReturnDepartment() {
+    @DisplayName(testNamePrefix + "Test for find exist office by code")
+    public void givenFindByCode_whenOfficeExist_thenReturnOffice() {
         entityManager.persist(entity);
-        var inDb = repository.findDepartmentByCode(entity.getCode());
+        var inDb = repository.findOfficeByCode(entity.getCode());
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
         assertThat(inDb.getName()).isEqualTo(entity.getName());
         assertThat(inDb.getDescription()).isEqualTo(entity.getDescription());
         assertThat(inDb.getCode()).isEqualTo(entity.getCode());
+        assertThat(inDb.getCreated()).isEqualTo(entity.getCreated());
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find not exist department by code")
-    public void givenFindByCode_whenDepartmentNotExist_thenReturnNull() {
-        var inDb = repository.findDepartmentByCode("DDT");
+    @DisplayName(testNamePrefix + "Test for find not exist office by code")
+    public void givenFindByCode_whenOfficeNotExist_thenReturnNull() {
+        var inDb = repository.findOfficeByCode("TOD");
         assertThat(inDb).isNull();
     }
 

@@ -28,14 +28,14 @@ public class OfficeServiceImpl implements OfficeService {
     public OfficeDto getById(Long id) {
         var office = officeRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Office not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Office with id: %d not found", id)));
         return OfficeMapper.mapToOfficeDto(office);
     }
 
     @Override
     public OfficeDto getByCode(String code) {
         if (!officeRepository.existsByCode(code)) {
-            throw new ResourceNotFoundException(String.format("Office with code %s not found!", code));
+            throw new ResourceNotFoundException(String.format("Office with code: %s not found!", code));
         }
         var office = officeRepository.findOfficeByCode(code);
         return OfficeMapper.mapToOfficeDto(office);

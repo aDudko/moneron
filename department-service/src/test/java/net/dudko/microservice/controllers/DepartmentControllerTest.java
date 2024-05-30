@@ -16,9 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,7 +44,7 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
 
     @BeforeEach
     public void setup() {
-        dto = TestUtil.getValidDepartmentDto();
+        dto = TestUtil.getValidDto();
     }
 
     @AfterEach
@@ -59,6 +59,7 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())));
@@ -82,6 +83,7 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())));
@@ -104,6 +106,7 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())));
@@ -149,6 +152,7 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())));
