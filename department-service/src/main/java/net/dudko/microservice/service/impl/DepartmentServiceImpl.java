@@ -30,14 +30,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto getById(Long id) {
         var department = departmentRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Department with id: %d not found", id)));
         return DepartmentMapper.mapToDepartmentDto(department);
     }
 
     @Override
     public DepartmentDto getByCode(String code) {
         if (!departmentRepository.existsByCode(code)) {
-            throw new ResourceNotFoundException(String.format("Department with code %s not found!", code));
+            throw new ResourceNotFoundException(String.format("Department with code: %s not found!", code));
         }
         var department = departmentRepository.findDepartmentByCode(code);
         return DepartmentMapper.mapToDepartmentDto(department);
@@ -53,7 +53,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     public DepartmentDto update(Long id, DepartmentDto departmentDto) {
         var department = departmentRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Department with id: %d not found", id)));
         department.setName(departmentDto.getName());
         department.setDescription(departmentDto.getDescription());
         return DepartmentMapper.mapToDepartmentDto(departmentRepository.save(department));
