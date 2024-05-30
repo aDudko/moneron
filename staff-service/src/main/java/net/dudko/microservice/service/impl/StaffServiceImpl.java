@@ -32,7 +32,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public StaffDto create(StaffDto staffDto) {
         if (staffRepository.existsByEmail(staffDto.getEmail())) {
-            throw new ResourceDuplicatedException(String.format("Employee with email:%s already exists!", staffDto.getEmail()));
+            throw new ResourceDuplicatedException(String.format("Employee with email: %s already exists!", staffDto.getEmail()));
         }
         staffDto.setStatus(StaffStatus.CREATED);
         var inDb = staffRepository.save(StaffMapper.mapToStaff(staffDto));
@@ -44,7 +44,7 @@ public class StaffServiceImpl implements StaffService {
     public ApiResponseDto getById(Long id) {
         var inDb = staffRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id %d not found!", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
         var inDepartmentService = departmentServiceApiClient.getDepartmentByCode(inDb.getDepartmentCode());
         var inOfficeService = officeServiceApiClient.getOfficeByCode(inDb.getOfficeCode());
         return ApiResponseDto.builder()
@@ -57,7 +57,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public StaffDto getByEmail(String email) {
         if (!staffRepository.existsByEmail(email)) {
-            throw new ResourceNotFoundException(String.format("Employee with email:%s not found!", email));
+            throw new ResourceNotFoundException(String.format("Employee with email: %s not found", email));
         }
         var inDb = staffRepository.findByEmail(email);
         return StaffMapper.mapToStaffDto(inDb);
@@ -71,7 +71,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public StaffDto update(Long id, StaffDto staffDto) {
         staffRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id %d not found!", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
         var inDb = staffRepository.save(StaffMapper.mapToStaff(staffDto));
         return StaffMapper.mapToStaffDto(inDb);
     }
@@ -79,7 +79,7 @@ public class StaffServiceImpl implements StaffService {
     @Override
     public void delete(Long id) {
         var inDb = staffRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id %d not found!", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
         inDb.setStatus(StaffStatus.DELETED);
         staffRepository.save(inDb);
     }
@@ -87,7 +87,7 @@ public class StaffServiceImpl implements StaffService {
     public ApiResponseDto getDefaultResponse(Long id, Exception exception) {
         var inDb = staffRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id %d not found!", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
         var inDepartmentService = DepartmentDto.builder()
                 .name("Default Department")
                 .description("You see this department, because department-service not available. Contact Support")
