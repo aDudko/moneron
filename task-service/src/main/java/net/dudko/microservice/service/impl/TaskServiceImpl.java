@@ -80,7 +80,7 @@ public class TaskServiceImpl implements TaskService {
     public ApiResponseDto getDefaultResponse(Long id, Exception exception) {
         var inDb = taskRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id %s not found!", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id %s not found", id)));
         var inDepartmentService = DepartmentDto.builder()
                 .name("Default Department")
                 .description("You see this department, because department-service not available. Contact Support")
