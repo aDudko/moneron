@@ -27,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class OfficeControllerTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "OFFICE-MICROSERVICE: OFFICE-CONTROLLER: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "OfficeController: ";
+    private static final String BASE_URL = "/office";
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +56,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for create Office when not exist duplicates")
     public void givenOfficeDto_whenCreateOffice_thenReturnCreatedOfficeDto() throws Exception {
-        mockMvc.perform(post("/office")
+        mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
@@ -71,7 +72,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for create Office when exist duplicates")
     public void givenOfficeDto_whenCreateOffice_thenReturnException() throws Exception {
         repository.save(OfficeMapper.mapToOffice(dto));
-        mockMvc.perform(post("/office")
+        mockMvc.perform(post(BASE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isConflict());
@@ -81,7 +82,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get Office by ID when Office exist")
     public void givenOfficeId_whenGetOfficeById_thenReturnOfficeDto() throws Exception {
         var inDb = repository.save(OfficeMapper.mapToOffice(dto));
-        mockMvc.perform(get("/office/{id}", inDb.getId())
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), inDb.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -95,7 +96,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Office by ID when Office not exist")
     public void givenOfficeId_whenGetOfficeById_thenReturnException() throws Exception {
-        mockMvc.perform(get("/office/{id}", id)
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
@@ -105,7 +106,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get Office by code when Office exist")
     public void givenOfficeCode_whenGetOfficeByCode_thenReturnOfficeDto() throws Exception {
         var inDb = repository.save(OfficeMapper.mapToOffice(dto));
-        mockMvc.perform(get("/office/code/{code}", inDb.getCode())
+        mockMvc.perform(get(BASE_URL.concat("/code/{code}"), inDb.getCode())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
@@ -119,7 +120,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Office by code when Office not exist")
     public void givenOfficeCode_whenGetOfficeByCode_thenReturnException() throws Exception {
-        mockMvc.perform(get("/office/code/{code}", dto.getCode())
+        mockMvc.perform(get(BASE_URL.concat("/code/{code}"), dto.getCode())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());

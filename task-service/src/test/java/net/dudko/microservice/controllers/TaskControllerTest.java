@@ -29,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class TaskControllerTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "TASK-MICROSERVICE: TASK-CONTROLLER: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "TaskController: ";
+    private static final String BASE_URL = "/task";
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,8 +42,6 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     private TaskRepository repository;
 
     private TaskDto dto;
-
-    private final Long id = 1L;
 
     @BeforeEach
     public void setup() {
@@ -57,14 +56,14 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for create Task")
     public void givenTaskDto_whenCreateTask_thenReturnCreatedTaskDto() throws Exception {
-        mockMvc.perform(post("/task")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.title", is(dto.getTitle())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
-                .andExpect(jsonPath("$.status", is("TODO")))
+                .andExpect(jsonPath("$.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.officeCode", is(dto.getOfficeCode())))
                 .andExpect(jsonPath("$.employeeEmail", is(dto.getEmployeeEmail())));
@@ -74,14 +73,14 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get Task by ID when Task exist")
     public void givenTaskId_whenGetTaskById_thenReturnTaskDto() throws Exception {
         var inDb = repository.save(TaskMapper.mapToTask(dto));
-        mockMvc.perform(get("/task/{id}", inDb.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), inDb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.taskDto.id", notNullValue()))
                 .andExpect(jsonPath("$.taskDto.title", is(dto.getTitle())))
                 .andExpect(jsonPath("$.taskDto.description", is(dto.getDescription())))
-                .andExpect(jsonPath("$.taskDto.status", is("TODO")))
+                .andExpect(jsonPath("$.taskDto.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.taskDto.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.taskDto.officeCode", is(dto.getOfficeCode())))
                 .andExpect(jsonPath("$.taskDto.employeeEmail", is(dto.getEmployeeEmail())));
@@ -90,9 +89,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Task by ID when Task not exist")
     public void givenTaskId_whenGetTaskById_thenReturnException() throws Exception {
-        mockMvc.perform(get("/task/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), dto.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 
@@ -100,9 +99,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get all Tasks when Tasks exist")
     public void givenTasks_whenGetAllTasksByEmployeeEmail_thenReturnListOfTaskDto() throws Exception {
         repository.save(TaskMapper.mapToTask(dto));
-        mockMvc.perform(get("/task/email/{email}", dto.getEmployeeEmail())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/email/{email}"), dto.getEmployeeEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(1)));
     }
@@ -110,9 +109,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get all Tasks when Tasks not exist")
     public void givenTasks_whenGetAllTasks_thenReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/task/email/{email}", dto.getEmployeeEmail())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/email/{email}"), dto.getEmployeeEmail())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(0)));
     }
@@ -127,15 +126,14 @@ class TaskControllerTest extends AbstractContainerBaseTest {
         dto.setDepartmentCode("UpdatedDepartmentCode");
         dto.setOfficeCode("UpdatedOfficeCode");
         dto.setEmployeeEmail("updated@mail.com");
-        mockMvc.perform(put("/task/{id}", inDb.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isOk())
+        mockMvc.perform(put(BASE_URL.concat("/{id}"), inDb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.title", is(dto.getTitle())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
-                .andExpect(jsonPath("$.status", is("DONE")))
+                .andExpect(jsonPath("$.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.officeCode", is(dto.getOfficeCode())))
                 .andExpect(jsonPath("$.employeeEmail", is(dto.getEmployeeEmail())));
@@ -150,9 +148,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
         dto.setDepartmentCode("UpdatedDepartmentCode");
         dto.setOfficeCode("UpdatedOfficeCode");
         dto.setEmployeeEmail("updated@mail.com");
-        mockMvc.perform(put("/task/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(put(BASE_URL.concat("/{id}"), dto.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 
@@ -160,9 +158,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for delete Task when Task exist")
     public void givenTaskId_whenDeleteTask_thenReturnNothing() throws Exception {
         var inDb = repository.save(TaskMapper.mapToTask(dto));
-        mockMvc.perform(delete("/task/{id}", inDb.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(delete(BASE_URL.concat("/{id}"), inDb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -173,9 +171,9 @@ class TaskControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for delete Task when Task not exist")
     public void givenTaskId_whenDeleteTask_thenReturnException() throws Exception {
-        mockMvc.perform(delete("/task/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(delete(BASE_URL.concat("/{id}"), dto.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }

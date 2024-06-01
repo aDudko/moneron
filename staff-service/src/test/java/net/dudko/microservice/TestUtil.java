@@ -1,32 +1,34 @@
 package net.dudko.microservice;
 
-import net.dudko.microservice.domain.entity.Staff;
-import net.dudko.microservice.model.dto.StaffDto;
-import net.dudko.microservice.model.dto.StaffStatus;
+import net.dudko.microservice.domain.entity.Employee;
+import net.dudko.microservice.model.dto.EmployeeDto;
+import net.dudko.microservice.model.dto.EmployeeStatus;
 
 public class TestUtil {
 
-    public static Staff getValidEntity() {
-        return Staff.builder()
+    public static final String MS_NAME = "STAFF-MICROSERVICE: ";
+
+    public static Employee getValidEntity() {
+        return Employee.builder()
                 .id(1L)
-                .firstName("Test first name")
-                .lastName("Test last name")
+                .firstName("Test FirstName")
+                .lastName("Test LastName")
                 .email("test@mail.com")
-                .status(StaffStatus.CREATED)
+                .status(EmployeeStatus.CREATED)
                 .departmentCode("IT")
-                .officeCode("001")
+                .officeCode("EMS")
                 .build();
     }
 
-    public static StaffDto getValidDto() {
-        return StaffDto.builder()
+    public static EmployeeDto getValidDto() {
+        return EmployeeDto.builder()
                 .id(1L)
-                .firstName("Test first name")
-                .lastName("Test last name")
+                .firstName("Test FirstName")
+                .lastName("Test LastName")
                 .email("test@mail.com")
-                .status(StaffStatus.CREATED)
+                .status(EmployeeStatus.CREATED)
                 .departmentCode("IT")
-                .officeCode("001")
+                .officeCode("EMS")
                 .build();
     }
 

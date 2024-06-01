@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class OfficeServiceTest {
 
-    private static final String testNamePrefix = "OFFICE-MICROSERVICE: OFFICE-SERVICE: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "OfficeService: ";
 
     @Mock
     private OfficeRepository repository;
@@ -52,7 +52,7 @@ class OfficeServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for create office when not exist duplicates")
+    @DisplayName(testNamePrefix + "Test for create Office when not exist duplicates")
     public void givenOfficeDto_whenCreateOffice_thenReturnCreatedOfficeDto() {
         given(repository.existsByCode(entity.getCode())).willReturn(Boolean.FALSE);
         given(repository.save(entity)).willReturn(entity);

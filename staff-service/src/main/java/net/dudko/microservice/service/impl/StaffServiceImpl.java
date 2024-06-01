@@ -2,13 +2,13 @@ package net.dudko.microservice.service.impl;
 
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
-import net.dudko.microservice.domain.mapper.StaffMapper;
+import net.dudko.microservice.domain.mapper.EmployeeMapper;
 import net.dudko.microservice.domain.repository.StaffRepository;
 import net.dudko.microservice.model.dto.ApiResponseDto;
 import net.dudko.microservice.model.dto.DepartmentDto;
 import net.dudko.microservice.model.dto.OfficeDto;
-import net.dudko.microservice.model.dto.StaffDto;
-import net.dudko.microservice.model.dto.StaffStatus;
+import net.dudko.microservice.model.dto.EmployeeDto;
+import net.dudko.microservice.model.dto.EmployeeStatus;
 import net.dudko.microservice.model.exception.ResourceDuplicatedException;
 import net.dudko.microservice.model.exception.ResourceNotFoundException;
 import net.dudko.microservice.service.DepartmentServiceApiClient;
@@ -30,13 +30,13 @@ public class StaffServiceImpl implements StaffService {
     private final OfficeServiceApiClient officeServiceApiClient;
 
     @Override
-    public StaffDto create(StaffDto staffDto) {
+    public EmployeeDto create(EmployeeDto staffDto) {
         if (staffRepository.existsByEmail(staffDto.getEmail())) {
             throw new ResourceDuplicatedException(String.format("Employee with email: %s already exists!", staffDto.getEmail()));
         }
-        staffDto.setStatus(StaffStatus.CREATED);
-        var inDb = staffRepository.save(StaffMapper.mapToStaff(staffDto));
-        return StaffMapper.mapToStaffDto(inDb);
+        staffDto.setStatus(EmployeeStatus.CREATED);
+        var inDb = staffRepository.save(EmployeeMapper.mapToEmployee(staffDto));
+        return EmployeeMapper.mapToEmployeeDto(inDb);
     }
 
     @Retry(name = "${spring.application.name}", fallbackMethod = "getDefaultResponse")
@@ -48,39 +48,39 @@ public class StaffServiceImpl implements StaffService {
         var inDepartmentService = departmentServiceApiClient.getDepartmentByCode(inDb.getDepartmentCode());
         var inOfficeService = officeServiceApiClient.getOfficeByCode(inDb.getOfficeCode());
         return ApiResponseDto.builder()
-                .staffDto(StaffMapper.mapToStaffDto(inDb))
+                .employeeDto(EmployeeMapper.mapToEmployeeDto(inDb))
                 .departmentDto(inDepartmentService)
                 .officeDto(inOfficeService)
                 .build();
     }
 
     @Override
-    public StaffDto getByEmail(String email) {
+    public EmployeeDto getByEmail(String email) {
         if (!staffRepository.existsByEmail(email)) {
             throw new ResourceNotFoundException(String.format("Employee with email: %s not found", email));
         }
         var inDb = staffRepository.findByEmail(email);
-        return StaffMapper.mapToStaffDto(inDb);
+        return EmployeeMapper.mapToEmployeeDto(inDb);
     }
 
     @Override
-    public List<StaffDto> getAll() {
-        return staffRepository.findAll().stream().map(StaffMapper::mapToStaffDto).toList();
+    public List<EmployeeDto> getStaff() {
+        return staffRepository.findAll().stream().map(EmployeeMapper::mapToEmployeeDto).toList();
     }
 
     @Override
-    public StaffDto update(Long id, StaffDto staffDto) {
+    public EmployeeDto update(Long id, EmployeeDto staffDto) {
         staffRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
-        var inDb = staffRepository.save(StaffMapper.mapToStaff(staffDto));
-        return StaffMapper.mapToStaffDto(inDb);
+        var inDb = staffRepository.save(EmployeeMapper.mapToEmployee(staffDto));
+        return EmployeeMapper.mapToEmployeeDto(inDb);
     }
 
     @Override
     public void delete(Long id) {
         var inDb = staffRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Employee with id: %d not found", id)));
-        inDb.setStatus(StaffStatus.DELETED);
+        inDb.setStatus(EmployeeStatus.DELETED);
         staffRepository.save(inDb);
     }
 
@@ -100,7 +100,7 @@ public class StaffServiceImpl implements StaffService {
                 .created(LocalDateTime.now())
                 .build();
         return ApiResponseDto.builder()
-                .staffDto(StaffMapper.mapToStaffDto(inDb))
+                .employeeDto(EmployeeMapper.mapToEmployeeDto(inDb))
                 .departmentDto(inDepartmentService)
                 .officeDto(inOfficeService)
                 .build();

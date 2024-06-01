@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class DepartmentRepositoryTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "DEPARTMENT-MICROSERVICE: DEPARTMENT-REPOSITORY: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "DepartmentRepository: ";
 
     private final TestEntityManager entityManager;
     private final DepartmentRepository repository;
@@ -57,11 +57,11 @@ class DepartmentRepositoryTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for check not exist by code")
     public void givenExistByCode_whenDepartmentNotExist_thenReturnFalse() {
         entityManager.persist(entity);
-        assertFalse(repository.existsByCode("DDT"));
+        assertFalse(repository.existsByCode("not-exist"));
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find exist department by code")
+    @DisplayName(testNamePrefix + "Test for find exist Department by code")
     public void givenFindByCode_whenDepartmentExist_thenReturnDepartment() {
         entityManager.persist(entity);
         var inDb = repository.findDepartmentByCode(entity.getCode());
@@ -73,9 +73,9 @@ class DepartmentRepositoryTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find not exist department by code")
+    @DisplayName(testNamePrefix + "Test for find not exist Department by code")
     public void givenFindByCode_whenDepartmentNotExist_thenReturnNull() {
-        var inDb = repository.findDepartmentByCode("DDT");
+        var inDb = repository.findDepartmentByCode("not-exist");
         assertThat(inDb).isNull();
     }
 

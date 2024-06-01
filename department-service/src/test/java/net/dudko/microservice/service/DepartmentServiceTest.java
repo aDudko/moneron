@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class DepartmentServiceTest {
 
-    private static final String testNamePrefix = "DEPARTMENT-MICROSERVICE: DEPARTMENT-SERVICE: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "DepartmentService: ";
 
     @Mock
     private DepartmentRepository repository;
@@ -40,8 +40,6 @@ class DepartmentServiceTest {
 
     private Department entity;
     private DepartmentDto dto;
-
-    private final Long id = 1L;
 
     @BeforeEach
     public void setup() {
@@ -80,8 +78,8 @@ class DepartmentServiceTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Department by ID when Department exist")
     public void givenDepartmentId_whenGetDepartmentById_thenReturnDepartmentDto() {
-        given(repository.findById(id)).willReturn(Optional.of(entity));
-        var inDb = service.getById(id);
+        given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
+        var inDb = service.getById(dto.getId());
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
         assertThat(inDb.getName()).isEqualTo(dto.getName());
@@ -92,11 +90,11 @@ class DepartmentServiceTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Department by ID when Department not exist")
     public void givenDepartmentId_whenGetDepartmentById_thenReturnException() {
-        given(repository.findById(id)).willReturn(Optional.empty());
+        given(repository.findById(entity.getId())).willReturn(Optional.empty());
         var message = assertThrows(ResourceNotFoundException.class, () -> {
-            service.getById(id);
+            service.getById(dto.getId());
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Department with id: %d not found", id));
+        assertThat(message).isEqualTo(String.format("Department with id: %d not found", dto.getId()));
     }
 
     @Test
@@ -146,10 +144,10 @@ class DepartmentServiceTest {
     @DisplayName(testNamePrefix + "Test for update Department when Department exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnUpdatedDepartmentDto() {
         given(repository.save(entity)).willReturn(entity);
-        given(repository.findById(id)).willReturn(Optional.of(entity));
-        entity.setName("updated name");
-        entity.setDescription("updated description");
-        var inDb = service.update(id, DepartmentMapper.mapToDepartmentDto(entity));
+        given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
+        entity.setName("Updated Name");
+        entity.setDescription("Updated Description");
+        var inDb = service.update(dto.getId(), DepartmentMapper.mapToDepartmentDto(entity));
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
         assertThat(inDb.getName()).isEqualTo(entity.getName());
@@ -160,13 +158,13 @@ class DepartmentServiceTest {
     @Test
     @DisplayName(testNamePrefix + "Test for update Department when Department not exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnException() {
-        given(repository.findById(id)).willReturn(Optional.empty());
-        entity.setName("updated name");
-        entity.setDescription("updated description");
+        given(repository.findById(entity.getId())).willReturn(Optional.empty());
+        entity.setName("Updated Name");
+        entity.setDescription("Updated Description");
         var message = assertThrows(ResourceNotFoundException.class, () -> {
-            service.update(id, DepartmentMapper.mapToDepartmentDto(entity));
+            service.update(dto.getId(), DepartmentMapper.mapToDepartmentDto(entity));
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Department with id: %d not found", id));
+        assertThat(message).isEqualTo(String.format("Department with id: %d not found", dto.getId()));
     }
 
 }

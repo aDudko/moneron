@@ -45,7 +45,7 @@ public class TaskServiceImpl implements TaskService {
     public ApiResponseDto getById(Long id) {
         var inDb = taskRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id '%d' not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id: %d not found", id)));
         var inDepartmentService = departmentServiceApiClient.getDepartmentByCode(inDb.getDepartmentCode());
         var inOfficeService = officeServiceApiClient.getOfficeByCode(inDb.getOfficeCode());
         var inStaffService = staffServiceApiClient.getEmployeeByEmail(inDb.getEmployeeEmail());
@@ -65,7 +65,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDto update(Long id, TaskDto taskDto) {
         taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id '%d' not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id: %d not found", id)));
         var inDb = taskRepository.save(TaskMapper.mapToTask(taskDto));
         return TaskMapper.mapToTaskDto(inDb);
     }
@@ -73,14 +73,14 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(Long id) {
         taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id '%d' not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id: %d not found", id)));
         taskRepository.deleteById(id);
     }
 
     public ApiResponseDto getDefaultResponse(Long id, Exception exception) {
         var inDb = taskRepository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id %s not found", id)));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Task with id: %d not found", id)));
         var inDepartmentService = DepartmentDto.builder()
                 .name("Default Department")
                 .description("You see this department, because department-service not available. Contact Support")

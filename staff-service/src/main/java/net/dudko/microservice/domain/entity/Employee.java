@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import net.dudko.microservice.model.dto.StaffStatus;
+import net.dudko.microservice.model.dto.EmployeeStatus;
 
 @Data
 @Builder
@@ -20,7 +20,7 @@ import net.dudko.microservice.model.dto.StaffStatus;
 @AllArgsConstructor
 @Entity
 @Table(name = "staff")
-public class Staff {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class Staff {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StaffStatus status;
+    private EmployeeStatus status;
 
     private String departmentCode;
 

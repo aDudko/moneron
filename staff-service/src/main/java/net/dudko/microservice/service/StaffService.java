@@ -1,21 +1,21 @@
 package net.dudko.microservice.service;
 
 import net.dudko.microservice.model.dto.ApiResponseDto;
-import net.dudko.microservice.model.dto.StaffDto;
+import net.dudko.microservice.model.dto.EmployeeDto;
 
 import java.util.List;
 
 public interface StaffService {
 
-    StaffDto create(StaffDto staffDto);
+    EmployeeDto create(EmployeeDto staffDto);
 
     ApiResponseDto getById(Long id);
 
-    StaffDto getByEmail(String email);
+    EmployeeDto getByEmail(String email);
 
-    List<StaffDto> getAll();
+    List<EmployeeDto> getStaff();
 
-    StaffDto update(Long id, StaffDto staffDto);
+    EmployeeDto update(Long id, EmployeeDto staffDto);
 
     void delete(Long id);
 

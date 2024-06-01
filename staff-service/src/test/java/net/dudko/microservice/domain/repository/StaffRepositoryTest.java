@@ -2,7 +2,7 @@ package net.dudko.microservice.domain.repository;
 
 import net.dudko.microservice.AbstractContainerBaseTest;
 import net.dudko.microservice.TestUtil;
-import net.dudko.microservice.domain.entity.Staff;
+import net.dudko.microservice.domain.entity.Employee;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,16 +21,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class StaffRepositoryTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "STAFF-MICROSERVICE: STAFF-REPOSITORY: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "StaffRepository: ";
 
     private final TestEntityManager entityManager;
     private final StaffRepository repository;
 
-    private Staff entity;
+    private Employee entity;
 
     @Autowired
     StaffRepositoryTest(TestEntityManager entityManager,
-                             StaffRepository repository) {
+                        StaffRepository repository) {
         this.entityManager = entityManager;
         this.repository = repository;
     }

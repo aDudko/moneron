@@ -7,14 +7,15 @@ import java.time.LocalDateTime;
 
 public class TestUtil {
 
+    public static final String MS_NAME = "OFFICE-MICROSERVICE: ";
     private static final LocalDateTime time = LocalDateTime.now();
 
     public static Office getValidEntity() {
         return Office.builder()
                 .id(1L)
-                .name("Test Office Default. Name")
-                .description("Test Office Default. Description")
-                .code("TOD")
+                .name("Test Office Name")
+                .description("Test Office Description")
+                .code("Test Office Code")
                 .created(time)
                 .build();
     }
@@ -22,9 +23,9 @@ public class TestUtil {
     public static OfficeDto getValidDto() {
         return OfficeDto.builder()
                 .id(1L)
-                .name("Test Office Default. Name")
-                .description("Test Office Default. Description")
-                .code("TOD")
+                .name("Test Office Name")
+                .description("Test Office Description")
+                .code("Test Office Code")
                 .created(time)
                 .build();
     }

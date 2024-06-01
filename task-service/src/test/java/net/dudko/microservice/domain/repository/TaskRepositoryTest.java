@@ -18,9 +18,9 @@ import static org.assertj.core.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-class TaskRepositoryTest  extends AbstractContainerBaseTest {
+class TaskRepositoryTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "TASK-MICROSERVICE: TASK-REPOSITORY: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "TaskRepository: ";
 
     private final TestEntityManager entityManager;
     private final TaskRepository repository;
@@ -31,7 +31,7 @@ class TaskRepositoryTest  extends AbstractContainerBaseTest {
 
     @Autowired
     TaskRepositoryTest(TestEntityManager entityManager,
-                        TaskRepository repository) {
+                       TaskRepository repository) {
         this.entityManager = entityManager;
         this.repository = repository;
     }

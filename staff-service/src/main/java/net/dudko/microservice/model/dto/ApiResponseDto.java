@@ -18,7 +18,7 @@ public class ApiResponseDto {
     @Schema(
             description = "Associate with StaffDto"
     )
-    private StaffDto staffDto;
+    private EmployeeDto employeeDto;
 
     @Schema(
             description = "Associate with DepartmentDto"

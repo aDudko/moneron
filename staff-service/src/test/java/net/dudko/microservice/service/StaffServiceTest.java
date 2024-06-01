@@ -1,10 +1,10 @@
 package net.dudko.microservice.service;
 
 import net.dudko.microservice.TestUtil;
-import net.dudko.microservice.domain.entity.Staff;
-import net.dudko.microservice.domain.mapper.StaffMapper;
+import net.dudko.microservice.domain.entity.Employee;
+import net.dudko.microservice.domain.mapper.EmployeeMapper;
 import net.dudko.microservice.domain.repository.StaffRepository;
-import net.dudko.microservice.model.dto.StaffDto;
+import net.dudko.microservice.model.dto.EmployeeDto;
 import net.dudko.microservice.model.exception.ResourceDuplicatedException;
 import net.dudko.microservice.model.exception.ResourceNotFoundException;
 import net.dudko.microservice.service.impl.StaffServiceImpl;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 @ActiveProfiles("test")
 class StaffServiceTest {
 
-    private static final String testNamePrefix = "STAFF-MICROSERVICE: STAFF-SERVICE: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "StaffService: ";
 
     @Mock
     private StaffRepository repository;
@@ -45,10 +45,8 @@ class StaffServiceTest {
     @InjectMocks
     private StaffServiceImpl service;
 
-    private Staff entity;
-    private StaffDto dto;
-
-    private final Long id = 1L;
+    private Employee entity;
+    private EmployeeDto dto;
 
     @BeforeEach
     public void setup() {
@@ -62,8 +60,8 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for create Staff when not exist duplicates")
-    public void givenStaffDto_whenCreateStaff_thenReturnCreatedStaffDto() {
+    @DisplayName(testNamePrefix + "Test for create Employee when not exist duplicates")
+    public void givenEmployeeDto_whenCreateEmployee_thenReturnCreatedEmployeeDto() {
         given(repository.existsByEmail(entity.getEmail())).willReturn(Boolean.FALSE);
         given(repository.save(entity)).willReturn(entity);
         var inDb = service.create(dto);
@@ -78,8 +76,8 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for create Staff when exist duplicates")
-    public void givenStaffDto_whenCreateStaff_thenReturnException() {
+    @DisplayName(testNamePrefix + "Test for create Employee when exist duplicates")
+    public void givenEmployeeDto_whenCreateEmployee_thenReturnException() {
         given(repository.existsByEmail(entity.getEmail())).willReturn(Boolean.TRUE);
         var message = assertThrows(ResourceDuplicatedException.class, () -> {
             service.create(dto);
@@ -88,34 +86,34 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get Staff by ID when Staff exist")
-    public void givenStaffId_whenGetStaffById_thenReturnStaffDto() {
-        given(repository.findById(id)).willReturn(Optional.of(entity));
-        var inDb = service.getById(id);
+    @DisplayName(testNamePrefix + "Test for get Employee by ID when Employee exist")
+    public void givenEmployeeId_whenGetEmployeeById_thenReturnEmployeeDto() {
+        given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
+        var inDb = service.getById(dto.getId());
         assertThat(inDb).isNotNull();
-        assertThat(inDb.getStaffDto()).isNotNull();
-        assertThat(inDb.getStaffDto().getId()).isNotNull();
-        assertThat(inDb.getStaffDto().getFirstName()).isEqualTo(entity.getFirstName());
-        assertThat(inDb.getStaffDto().getLastName()).isEqualTo(entity.getLastName());
-        assertThat(inDb.getStaffDto().getEmail()).isEqualTo(entity.getEmail());
-        assertThat(inDb.getStaffDto().getStatus()).isEqualTo(entity.getStatus());
-        assertThat(inDb.getStaffDto().getDepartmentCode()).isEqualTo(entity.getDepartmentCode());
-        assertThat(inDb.getStaffDto().getOfficeCode()).isEqualTo(entity.getOfficeCode());
+        assertThat(inDb.getEmployeeDto()).isNotNull();
+        assertThat(inDb.getEmployeeDto().getId()).isNotNull();
+        assertThat(inDb.getEmployeeDto().getFirstName()).isEqualTo(entity.getFirstName());
+        assertThat(inDb.getEmployeeDto().getLastName()).isEqualTo(entity.getLastName());
+        assertThat(inDb.getEmployeeDto().getEmail()).isEqualTo(entity.getEmail());
+        assertThat(inDb.getEmployeeDto().getStatus()).isEqualTo(entity.getStatus());
+        assertThat(inDb.getEmployeeDto().getDepartmentCode()).isEqualTo(entity.getDepartmentCode());
+        assertThat(inDb.getEmployeeDto().getOfficeCode()).isEqualTo(entity.getOfficeCode());
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get Staff by ID when Staff not exist")
-    public void givenStaffId_whenGetStaffById_thenReturnException() {
-        given(repository.findById(id)).willReturn(Optional.empty());
+    @DisplayName(testNamePrefix + "Test for get Employee by ID when Employee not exist")
+    public void givenEmployeeId_whenGetEmployeeById_thenReturnException() {
+        given(repository.findById(entity.getId())).willReturn(Optional.empty());
         var message = assertThrows(ResourceNotFoundException.class, () -> {
-            service.getById(id);
+            service.getById(dto.getId());
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Employee with id: %d not found", id));
+        assertThat(message).isEqualTo(String.format("Employee with id: %d not found", dto.getId()));
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get Staff by email when Staff exist")
-    public void givenStaffCode_whenGetStaffByCode_thenReturnStaffDto() {
+    @DisplayName(testNamePrefix + "Test for get Employee by email when Employee exist")
+    public void givenEmployeeEmail_whenGetEmployeeByEmail_thenReturnEmployeeDto() {
         given(repository.existsByEmail(entity.getEmail())).willReturn(Boolean.TRUE);
         given(repository.findByEmail(entity.getEmail())).willReturn(entity);
         var inDb = service.getByEmail(dto.getEmail());
@@ -130,8 +128,8 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get Staff by email when Staff not exist")
-    public void givenStaffCode_whenGetStaffByCode_thenReturnException() {
+    @DisplayName(testNamePrefix + "Test for get Employee by email when Employee not exist")
+    public void givenEmployeeEmail_whenGetEmployeeByEmail_thenReturnException() {
         given(repository.existsByEmail(entity.getEmail())).willReturn(Boolean.FALSE);
         var message = assertThrows(ResourceNotFoundException.class, () -> {
             service.getByEmail(dto.getEmail());
@@ -140,10 +138,10 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get all Staffs when Staffs exist")
-    public void givenStaffs_whenGetAllStaffs_thenReturnListOfStaffDto() {
+    @DisplayName(testNamePrefix + "Test for get all Staff when Staff exist")
+    public void givenStaff_whenGetStaff_thenReturnListOfEmployeeDto() {
         given(repository.findAll()).willReturn(List.of(entity));
-        var inDb = service.getAll();
+        var inDb = service.getStaff();
         assertThat(inDb).isNotNull();
         assertThat(inDb).isNotEmpty();
         assertThat(inDb.size()).isEqualTo(1);
@@ -151,25 +149,25 @@ class StaffServiceTest {
 
     @Test
     @DisplayName(testNamePrefix + "Test for get all Staff when Staff not exist")
-    public void givenStaff_whenGetAllStaffs_thenReturnEmptyList() {
+    public void givenStaff_whenGetStaff_thenReturnEmptyList() {
         given(repository.findAll()).willReturn(Collections.emptyList());
-        var inDb = service.getAll();
+        var inDb = service.getStaff();
         assertThat(inDb).isNotNull();
         assertThat(inDb).isEmpty();
         assertThat(inDb.size()).isEqualTo(0);
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for update Staff when Staff exist")
-    public void givenStaffDto_whenUpdateStaff_thenReturnUpdatedStaffDto() {
+    @DisplayName(testNamePrefix + "Test for update Employee when Employee exist")
+    public void givenEmployeeDto_whenUpdateEmployee_thenReturnUpdatedEmployeeDto() {
         given(repository.save(entity)).willReturn(entity);
-        given(repository.findById(id)).willReturn(Optional.of(entity));
-        entity.setFirstName("Updated first name");
-        entity.setLastName("Updated last name");
+        given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
+        entity.setFirstName("Updated FirstName");
+        entity.setLastName("Updated LastName");
         entity.setEmail("updated@mail.com");
-        entity.setDepartmentCode("UpdatedDepartmentCode");
-        entity.setOfficeCode("UpdatedOfficeCode");
-        var inDb = service.update(id, StaffMapper.mapToStaffDto(entity));
+        entity.setDepartmentCode("Updated Department Code");
+        entity.setOfficeCode("Updated Office Code");
+        var inDb = service.update(dto.getId(), EmployeeMapper.mapToEmployeeDto(entity));
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
         assertThat(inDb.getFirstName()).isEqualTo(entity.getFirstName());
@@ -181,26 +179,26 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for update Staff when Staff not exist")
-    public void givenStaffDto_whenUpdateStaff_thenReturnException() {
-        given(repository.findById(id)).willReturn(Optional.empty());
-        entity.setFirstName("Updated first name");
-        entity.setLastName("Updated last name");
+    @DisplayName(testNamePrefix + "Test for update Employee when Employee not exist")
+    public void givenEmployeeDto_whenUpdateEmployee_thenReturnException() {
+        given(repository.findById(entity.getId())).willReturn(Optional.empty());
+        entity.setFirstName("Updated FirstName");
+        entity.setLastName("Updated LastName");
         entity.setEmail("updated@mail.com");
-        entity.setDepartmentCode("UpdatedDepartmentCode");
-        entity.setOfficeCode("UpdatedOfficeCode");
+        entity.setDepartmentCode("Updated Department Code");
+        entity.setOfficeCode("Updated Office Code");
         var message = assertThrows(ResourceNotFoundException.class, () -> {
-            service.update(id, StaffMapper.mapToStaffDto(entity));
+            service.update(dto.getId(), EmployeeMapper.mapToEmployeeDto(entity));
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Employee with id: %d not found", id));
+        assertThat(message).isEqualTo(String.format("Employee with id: %d not found", dto.getId()));
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for delete Staff when Staff exist")
-    public void givenStaffId_whenDeleteStaff_thenReturnNothing() {
-        willDoNothing().given(repository).deleteById(id);
-        repository.deleteById(id);
-        verify(repository, times(1)).deleteById(id);
+    @DisplayName(testNamePrefix + "Test for delete Employee when Employee exist")
+    public void givenEmployeeId_whenDeleteEmployee_thenReturnNothing() {
+        given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
+        service.delete(entity.getId());
+        verify(repository, times(0)).deleteById(entity.getId());
     }
 
 }

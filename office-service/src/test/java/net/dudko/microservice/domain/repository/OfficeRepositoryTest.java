@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 class OfficeRepositoryTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "OFFICE-MICROSERVICE: OFFICE-REPOSITORY: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "OfficeRepository: ";
 
     private final TestEntityManager entityManager;
     private final OfficeRepository repository;
@@ -58,11 +58,11 @@ class OfficeRepositoryTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for check not exist by code")
     public void givenExistByCode_whenOfficeNotExist_thenReturnFalse() {
         entityManager.persist(entity);
-        assertFalse(repository.existsByCode("DDT"));
+        assertFalse(repository.existsByCode("Updated Code"));
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find exist office by code")
+    @DisplayName(testNamePrefix + "Test for find exist Office by code")
     public void givenFindByCode_whenOfficeExist_thenReturnOffice() {
         entityManager.persist(entity);
         var inDb = repository.findOfficeByCode(entity.getCode());
@@ -75,9 +75,9 @@ class OfficeRepositoryTest extends AbstractContainerBaseTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for find not exist office by code")
+    @DisplayName(testNamePrefix + "Test for find not exist Office by code")
     public void givenFindByCode_whenOfficeNotExist_thenReturnNull() {
-        var inDb = repository.findOfficeByCode("TOD");
+        var inDb = repository.findOfficeByCode("Updated Code");
         assertThat(inDb).isNull();
     }
 

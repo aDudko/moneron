@@ -27,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 class DepartmentControllerTest extends AbstractContainerBaseTest {
 
-    private static final String testNamePrefix = "DEPARTMENT-MICROSERVICE: DEPARTMENT-CONTROLLER: ";
+    private static final String testNamePrefix = TestUtil.MS_NAME + "DepartmentController: ";
+    private static final String BASE_URL = "/department";
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,8 +40,6 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     private DepartmentRepository repository;
 
     private DepartmentDto dto;
-
-    private final Long id = 1L;
 
     @BeforeEach
     public void setup() {
@@ -55,9 +54,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for create Department when not exist duplicates")
     public void givenDepartmentDto_whenCreateDepartment_thenReturnCreatedDepartmentDto() throws Exception {
-        mockMvc.perform(post("/department")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
@@ -69,9 +68,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for create Department when exist duplicates")
     public void givenDepartmentDto_whenCreateDepartment_thenReturnException() throws Exception {
         repository.save(DepartmentMapper.mapToDepartment(dto));
-        mockMvc.perform(post("/department")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(post(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isConflict());
     }
 
@@ -79,9 +78,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get Department by ID when Department exist")
     public void givenDepartmentId_whenGetDepartmentById_thenReturnDepartmentDto() throws Exception {
         var inDb = repository.save(DepartmentMapper.mapToDepartment(dto));
-        mockMvc.perform(get("/department/{id}", inDb.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), inDb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
@@ -92,9 +91,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Department by ID when Department not exist")
     public void givenDepartmentId_whenGetDepartmentById_thenReturnException() throws Exception {
-        mockMvc.perform(get("/department/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), dto.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 
@@ -102,9 +101,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get Department by code when Department exist")
     public void givenDepartmentCode_whenGetDepartmentByCode_thenReturnDepartmentDto() throws Exception {
         var inDb = repository.save(DepartmentMapper.mapToDepartment(dto));
-        mockMvc.perform(get("/department/code/{code}", inDb.getCode())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/code/{code}"), inDb.getCode())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
@@ -115,9 +114,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get Department by code when Department not exist")
     public void givenDepartmentCode_whenGetDepartmentByCode_thenReturnException() throws Exception {
-        mockMvc.perform(get("/department/code/{code}", dto.getCode())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL.concat("/code/{code}"), dto.getCode())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 
@@ -125,9 +124,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for get all Departments when Departments exist")
     public void givenDepartments_whenGetAllDepartments_thenReturnListOfDepartmentDto() throws Exception {
         repository.save(DepartmentMapper.mapToDepartment(dto));
-        mockMvc.perform(get("/department")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(1)));
     }
@@ -135,9 +134,9 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for get all Departments when Departments not exist")
     public void givenDepartments_whenGetAllDepartments_thenReturnEmptyList() throws Exception {
-        mockMvc.perform(get("/department")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        mockMvc.perform(get(BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(0)));
     }
@@ -146,11 +145,11 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for update Department when Department exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnUpdatedDepartmentDto() throws Exception {
         var inDb = repository.save(DepartmentMapper.mapToDepartment(dto));
-        dto.setName("updated name");
-        dto.setDescription("updated description");
-        mockMvc.perform(put("/department/{id}", inDb.getId())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        dto.setName("Updated Name");
+        dto.setDescription("Updated Description");
+        mockMvc.perform(put(BASE_URL.concat("/{id}"), inDb.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is(dto.getName())))
@@ -161,11 +160,11 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for update Department when Department not exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnException() throws Exception {
-        dto.setName("updated name");
-        dto.setDescription("updated description");
-         mockMvc.perform(put("/department/{id}", id)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
+        dto.setName("Updated Name");
+        dto.setDescription("Updated Description");
+        mockMvc.perform(put(BASE_URL.concat("/{id}"), dto.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
     }
 

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import net.dudko.microservice.model.dto.ApiResponseDto;
-import net.dudko.microservice.model.dto.StaffDto;
+import net.dudko.microservice.model.dto.EmployeeDto;
 import net.dudko.microservice.service.StaffService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,21 +33,21 @@ public class StaffController {
 
     @Operation(
             summary = "CREATE Staff REST API",
-            description = "Create Staff REST API to save Employee"
+            description = "Create Employee REST API to save Employee"
     )
     @ApiResponse(
             responseCode = "201",
             description = "HTTP STATUS 201 CREATED"
     )
     @PostMapping
-    public ResponseEntity<StaffDto> createEmployee(@RequestBody StaffDto staffDto) {
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto staffDto) {
         var staff = staffService.create(staffDto);
         return new ResponseEntity<>(staff, HttpStatus.CREATED);
     }
 
     @Operation(
             summary = "GET Staff REST API",
-            description = "Get Staff REST API to get Employee by ID with Department and Office"
+            description = "Get Employee REST API to get Employee by ID with codes of Department and Office"
     )
     @ApiResponse(
             responseCode = "200",
@@ -61,14 +61,14 @@ public class StaffController {
 
     @Operation(
             summary = "GET Staff REST API",
-            description = "Get Staff REST API to get Employee by email"
+            description = "Get Employee REST API to get Employee by email"
     )
     @ApiResponse(
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
     @GetMapping("email/{email}")
-    public ResponseEntity<StaffDto> getEmployeeByEmail(@PathVariable String email) {
+    public ResponseEntity<EmployeeDto> getEmployeeByEmail(@PathVariable String email) {
         var response = staffService.getByEmail(email);
         return ResponseEntity.ok(response);
     }
@@ -82,29 +82,29 @@ public class StaffController {
             description = "HTTP STATUS 200 OK"
     )
     @GetMapping
-    public ResponseEntity<List<StaffDto>> getStaff() {
-        var staff = staffService.getAll();
+    public ResponseEntity<List<EmployeeDto>> getStaff() {
+        var staff = staffService.getStaff();
         return ResponseEntity.ok(staff);
     }
 
     @Operation(
             summary = "UPDATE Staff REST API",
-            description = "Update Staff REST API to update Employee"
+            description = "Update Employee REST API to update Employee"
     )
     @ApiResponse(
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
     @PutMapping("{id}")
-    public ResponseEntity<StaffDto> updateEmployee(@PathVariable Long id,
-                                                   @RequestBody StaffDto staffDto) {
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,
+                                                      @RequestBody EmployeeDto staffDto) {
         var staff = staffService.update(id, staffDto);
         return ResponseEntity.ok(staff);
     }
 
     @Operation(
             summary = "DELETE Staff REST API",
-            description = "Delete Staff REST API to update Employee"
+            description = "Delete Employee REST API to update Employee"
     )
     @ApiResponse(
             responseCode = "200",
