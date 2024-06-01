@@ -72,7 +72,7 @@ class OfficeServiceTest {
         var message = assertThrows(ResourceDuplicatedException.class, () -> {
             service.create(dto);
         }).getMessage();
-        assertThat(message).isEqualTo("Code of office already exists");
+        assertThat(message).isEqualTo("Code of office already exists!");
     }
 
     @Test
@@ -119,7 +119,7 @@ class OfficeServiceTest {
         var message = assertThrows(ResourceNotFoundException.class, () -> {
             service.getByCode(dto.getCode());
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Office with code: %s not found!", entity.getCode()));
+        assertThat(message).isEqualTo(String.format("Office with code: %s not found", entity.getCode()));
     }
 
 }

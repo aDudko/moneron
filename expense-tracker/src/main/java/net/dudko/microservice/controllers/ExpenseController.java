@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import net.dudko.microservice.model.dto.ApiResponseDto;
 import net.dudko.microservice.model.dto.ExpenseDto;
 import net.dudko.microservice.service.ExpenseService;
 import org.springframework.http.HttpStatus;
@@ -39,22 +40,22 @@ public class ExpenseController {
     )
     @PostMapping
     public ResponseEntity<ExpenseDto> createExpense(@RequestBody ExpenseDto expenseDto) {
-        var expense = expenseService.createExpense(expenseDto);
+        var expense = expenseService.create(expenseDto);
         return new ResponseEntity<>(expense, HttpStatus.CREATED);
     }
 
     @Operation(
             summary = "GET Expense REST API",
-            description = "Get Expense REST API to get Expense by ID"
+            description = "Get Expense REST API to get Expense by ID with Category"
     )
     @ApiResponse(
             responseCode = "200",
             description = "HTTP STATUS 200 OK"
     )
     @GetMapping("{id}")
-    public ResponseEntity<ExpenseDto> getExpense(@PathVariable Long id) {
-        var expense = expenseService.getExpenseById(id);
-        return ResponseEntity.ok(expense);
+    public ResponseEntity<ApiResponseDto> getExpense(@PathVariable Long id) {
+        var response = expenseService.getById(id);
+        return ResponseEntity.ok(response);
     }
 
     @Operation(
@@ -67,7 +68,7 @@ public class ExpenseController {
     )
     @GetMapping
     public ResponseEntity<List<ExpenseDto>> getExpenses() {
-        var expenses = expenseService.getExpenses();
+        var expenses = expenseService.getAll();
         return ResponseEntity.ok(expenses);
     }
 
@@ -82,7 +83,7 @@ public class ExpenseController {
     @PutMapping("{id}")
     public ResponseEntity<ExpenseDto> updateExpense(@PathVariable Long id,
                                                     @RequestBody ExpenseDto expenseDto) {
-        var expense = expenseService.updateExpense(id, expenseDto);
+        var expense = expenseService.update(id, expenseDto);
         return ResponseEntity.ok(expense);
     }
 
@@ -96,8 +97,8 @@ public class ExpenseController {
     )
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
-        expenseService.deleteExpense(id);
-        return ResponseEntity.ok("Expense deleted");
+        expenseService.delete(id);
+        return ResponseEntity.ok("Expense was deleted successfully");
     }
 
 }

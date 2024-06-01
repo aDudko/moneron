@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ApiResponseDto {
 
     @Schema(
-            description = "Associate with StaffDto"
+            description = "Associate with EmployeeDto"
     )
     private EmployeeDto employeeDto;
 

@@ -41,8 +41,6 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
 
     private OfficeDto dto;
 
-    private final Long id = 1L;
-
     @BeforeEach
     public void setup() {
         dto = TestUtil.getValidDto();
@@ -90,13 +88,13 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())))
-                .andExpect(jsonPath("$.code", notNullValue()));
+                .andExpect(jsonPath("$.created", notNullValue()));
     }
 
     @Test
     @DisplayName(testNamePrefix + "Test for get Office by ID when Office not exist")
     public void givenOfficeId_whenGetOfficeById_thenReturnException() throws Exception {
-        mockMvc.perform(get(BASE_URL.concat("/{id}"), id)
+        mockMvc.perform(get(BASE_URL.concat("/{id}"), dto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))
                 .andExpect(status().isNotFound());
@@ -114,7 +112,7 @@ class OfficeControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.name", is(dto.getName())))
                 .andExpect(jsonPath("$.description", is(dto.getDescription())))
                 .andExpect(jsonPath("$.code", is(dto.getCode())))
-                .andExpect(jsonPath("$.code", notNullValue()));
+                .andExpect(jsonPath("$.created", notNullValue()));
     }
 
     @Test

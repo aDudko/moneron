@@ -26,6 +26,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ResourceDuplicatedException.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorDetails> handleResourceDuplicatedException(
+            ResourceDuplicatedException exception,
+            WebRequest webRequest
+    ) {
+        var errorDetails = ErrorDetails.builder()
+                .message(exception.getMessage())
+                .errorCode("RESOURCE_DUPLICATED")
+                .timestamp(LocalDateTime.now())
+                .details(webRequest.getDescription(false))
+                .build();
+        return new ResponseEntity<>(errorDetails, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(ExpenseTrackerAPIException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ResponseEntity<ErrorDetails> handleExpenseTrackerAPIException(

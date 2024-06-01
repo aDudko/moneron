@@ -1,6 +1,7 @@
 package net.dudko.microservice;
 
 import net.dudko.microservice.domain.entity.Department;
+import net.dudko.microservice.domain.mapper.DepartmentMapper;
 import net.dudko.microservice.model.dto.DepartmentDto;
 
 public class TestUtil {
@@ -17,11 +18,6 @@ public class TestUtil {
     }
 
     public static DepartmentDto getValidDto() {
-        return DepartmentDto.builder()
-                .id(1L)
-                .name("Test Department Name")
-                .description("Test Department Description")
-                .code("Test Department Code")
-                .build();
+        return DepartmentMapper.mapToDepartmentDto(getValidEntity());
     }
 }

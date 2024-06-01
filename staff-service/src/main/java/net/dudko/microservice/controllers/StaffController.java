@@ -40,8 +40,8 @@ public class StaffController {
             description = "HTTP STATUS 201 CREATED"
     )
     @PostMapping
-    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto staffDto) {
-        var staff = staffService.create(staffDto);
+    public ResponseEntity<EmployeeDto> createEmployee(@RequestBody EmployeeDto employeeDto) {
+        var staff = staffService.create(employeeDto);
         return new ResponseEntity<>(staff, HttpStatus.CREATED);
     }
 
@@ -97,8 +97,8 @@ public class StaffController {
     )
     @PutMapping("{id}")
     public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,
-                                                      @RequestBody EmployeeDto staffDto) {
-        var staff = staffService.update(id, staffDto);
+                                                      @RequestBody EmployeeDto employeeDto) {
+        var staff = staffService.update(id, employeeDto);
         return ResponseEntity.ok(staff);
     }
 

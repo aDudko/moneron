@@ -58,7 +58,7 @@ class OfficeRepositoryTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for check not exist by code")
     public void givenExistByCode_whenOfficeNotExist_thenReturnFalse() {
         entityManager.persist(entity);
-        assertFalse(repository.existsByCode("Updated Code"));
+        assertFalse(repository.existsByCode("Not Exist"));
     }
 
     @Test
@@ -77,7 +77,7 @@ class OfficeRepositoryTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for find not exist Office by code")
     public void givenFindByCode_whenOfficeNotExist_thenReturnNull() {
-        var inDb = repository.findOfficeByCode("Updated Code");
+        var inDb = repository.findOfficeByCode("Not Exist");
         assertThat(inDb).isNull();
     }
 

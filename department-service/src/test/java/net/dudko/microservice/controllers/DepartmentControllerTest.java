@@ -160,8 +160,8 @@ class DepartmentControllerTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for update Department when Department not exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnException() throws Exception {
-        dto.setName("Updated Name");
-        dto.setDescription("Updated Description");
+        dto.setName("Not Exist");
+        dto.setDescription("Not Exist");
         mockMvc.perform(put(BASE_URL.concat("/{id}"), dto.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(dto)))

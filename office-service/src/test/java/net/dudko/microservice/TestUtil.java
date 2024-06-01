@@ -1,6 +1,7 @@
 package net.dudko.microservice;
 
 import net.dudko.microservice.domain.entity.Office;
+import net.dudko.microservice.domain.mapper.OfficeMapper;
 import net.dudko.microservice.model.dto.OfficeDto;
 
 import java.time.LocalDateTime;
@@ -21,13 +22,7 @@ public class TestUtil {
     }
 
     public static OfficeDto getValidDto() {
-        return OfficeDto.builder()
-                .id(1L)
-                .name("Test Office Name")
-                .description("Test Office Description")
-                .code("Test Office Code")
-                .created(time)
-                .build();
+        return OfficeMapper.mapToOfficeDto(getValidEntity());
     }
 
 }

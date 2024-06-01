@@ -1,6 +1,6 @@
 package net.dudko.microservice.model.dto;
 
-public enum StaffStatus {
+public enum EmployeeStatus {
 
     CREATED, DELETED
 

@@ -63,7 +63,7 @@ class StaffControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.firstName", is(dto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(dto.getLastName())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.status", is("CREATED")))
+                .andExpect(jsonPath("$.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.officeCode", is(dto.getOfficeCode())));
     }
@@ -90,7 +90,7 @@ class StaffControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.employeeDto.firstName", is(dto.getFirstName())))
                 .andExpect(jsonPath("$.employeeDto.lastName", is(dto.getLastName())))
                 .andExpect(jsonPath("$.employeeDto.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.employeeDto.status", is("CREATED")))
+                .andExpect(jsonPath("$.employeeDto.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.employeeDto.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.employeeDto.officeCode", is(dto.getOfficeCode())));
     }
@@ -116,7 +116,7 @@ class StaffControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.firstName", is(dto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(dto.getLastName())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.status", is("CREATED")))
+                .andExpect(jsonPath("$.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.officeCode", is(dto.getOfficeCode())));
     }
@@ -168,7 +168,7 @@ class StaffControllerTest extends AbstractContainerBaseTest {
                 .andExpect(jsonPath("$.firstName", is(dto.getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(dto.getLastName())))
                 .andExpect(jsonPath("$.email", is(dto.getEmail())))
-                .andExpect(jsonPath("$.status", is("CREATED")))
+                .andExpect(jsonPath("$.status", is(dto.getStatus().name())))
                 .andExpect(jsonPath("$.departmentCode", is(dto.getDepartmentCode())))
                 .andExpect(jsonPath("$.officeCode", is(dto.getOfficeCode())));
     }

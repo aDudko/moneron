@@ -39,7 +39,7 @@ public class CategoryController {
     )
     @PostMapping
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
-        categoryDto = categoryService.createCategory(categoryDto);
+        categoryDto = categoryService.create(categoryDto);
         return new ResponseEntity<>(categoryDto, HttpStatus.CREATED);
     }
 
@@ -52,8 +52,21 @@ public class CategoryController {
             description = "HTTP STATUS 200 OK"
     )
     @GetMapping("{id}")
-    public ResponseEntity<CategoryDto> getCategory(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryService.getCategory(id));
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.getById(id));
+    }
+
+    @Operation(
+            summary = "GET Category REST API",
+            description = "Get Category REST API to get Category by name"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS 200 OK"
+    )
+    @GetMapping("/name/{name}")
+    public ResponseEntity<CategoryDto> getCategoryByName(@PathVariable String name) {
+        return ResponseEntity.ok(categoryService.getByName(name));
     }
 
     @Operation(
@@ -66,7 +79,7 @@ public class CategoryController {
     )
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getCategories() {
-        return ResponseEntity.ok(categoryService.getCategories());
+        return ResponseEntity.ok(categoryService.getAll());
     }
 
     @Operation(
@@ -80,7 +93,7 @@ public class CategoryController {
     @PutMapping("{id}")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id,
                                                       @RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.updateCategory(id, categoryDto));
+        return ResponseEntity.ok(categoryService.update(id, categoryDto));
     }
 
     @Operation(
@@ -93,7 +106,7 @@ public class CategoryController {
     )
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id) {
-        categoryService.deleteCategory(id);
+        categoryService.delete(id);
         return ResponseEntity.ok("Category deleted successfully");
     }
 

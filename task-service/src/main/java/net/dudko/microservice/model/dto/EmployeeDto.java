@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Schema(
-        description = "Staff DTO (Data Transfer Object) to transfer the data between client and server"
+        description = "Employee DTO (Data Transfer Object) to transfer the data between client and server"
 )
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffDto {
+public class EmployeeDto {
 
     @Schema(
             description = "Id of employee"
@@ -38,7 +38,7 @@ public class StaffDto {
     @Schema(
             description = "Status of employee"
     )
-    private StaffStatus status;
+    private EmployeeStatus status;
 
     @Schema(
             description = "Code of department to which the employee is assigned"

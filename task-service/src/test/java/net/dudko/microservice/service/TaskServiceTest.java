@@ -73,25 +73,25 @@ class TaskServiceTest {
         assertThat(inDb.getTitle()).isEqualTo(dto.getTitle());
         assertThat(inDb.getDescription()).isEqualTo(dto.getDescription());
         assertThat(inDb.getStatus()).isEqualTo(dto.getStatus());
-        assertThat(inDb.getDepartmentCode()).isEqualTo(entity.getDepartmentCode());
-        assertThat(inDb.getOfficeCode()).isEqualTo(entity.getOfficeCode());
-        assertThat(inDb.getEmployeeEmail()).isEqualTo(entity.getEmployeeEmail());
+        assertThat(inDb.getDepartmentCode()).isEqualTo(dto.getDepartmentCode());
+        assertThat(inDb.getOfficeCode()).isEqualTo(dto.getOfficeCode());
+        assertThat(inDb.getEmployeeEmail()).isEqualTo(dto.getEmployeeEmail());
     }
 
     @Test
     @DisplayName(testNamePrefix + "Test for get Task by ID when Task exist")
     public void givenTaskId_whenGetTaskById_thenReturnTaskDto() {
         given(repository.findById(entity.getId())).willReturn(Optional.of(entity));
-        var inDb = service.getById(entity.getId());
+        var inDb = service.getById(dto.getId());
         assertThat(inDb).isNotNull();
         assertThat(inDb.getTaskDto().getId()).isNotNull();
         assertThat(inDb.getTaskDto().getId()).isNotNull();
         assertThat(inDb.getTaskDto().getTitle()).isEqualTo(dto.getTitle());
         assertThat(inDb.getTaskDto().getDescription()).isEqualTo(dto.getDescription());
         assertThat(inDb.getTaskDto().getStatus()).isEqualTo(dto.getStatus());
-        assertThat(inDb.getTaskDto().getDepartmentCode()).isEqualTo(entity.getDepartmentCode());
-        assertThat(inDb.getTaskDto().getOfficeCode()).isEqualTo(entity.getOfficeCode());
-        assertThat(inDb.getTaskDto().getEmployeeEmail()).isEqualTo(entity.getEmployeeEmail());
+        assertThat(inDb.getTaskDto().getDepartmentCode()).isEqualTo(dto.getDepartmentCode());
+        assertThat(inDb.getTaskDto().getOfficeCode()).isEqualTo(dto.getOfficeCode());
+        assertThat(inDb.getTaskDto().getEmployeeEmail()).isEqualTo(dto.getEmployeeEmail());
     }
 
     @Test
@@ -108,7 +108,7 @@ class TaskServiceTest {
     @DisplayName(testNamePrefix + "Test for get all Tasks when Tasks exist")
     public void givenTask_whenGetAllTasksByEmployeeEmail_thenReturnListOfTasks() {
         given(repository.findAllByEmployeeEmail(entity.getEmployeeEmail())).willReturn(List.of(entity));
-        var inDb = service.getAllByEmployeeEmail(entity.getEmployeeEmail());
+        var inDb = service.getAllByEmployeeEmail(dto.getEmployeeEmail());
         assertThat(inDb).isNotNull();
         assertThat(inDb).isNotEmpty();
         assertThat(inDb.size()).isEqualTo(1);
@@ -118,7 +118,7 @@ class TaskServiceTest {
     @DisplayName(testNamePrefix + "Test for get all Tasks when Tasks not exist")
     public void givenTask_whenGetAllTasksByEmployeeEmail_thenReturnEmptyList() {
         given(repository.findAllByEmployeeEmail(entity.getEmployeeEmail())).willReturn(Collections.emptyList());
-        var inDb = service.getAllByEmployeeEmail(entity.getEmployeeEmail());
+        var inDb = service.getAllByEmployeeEmail(dto.getEmployeeEmail());
         assertThat(inDb).isNotNull();
         assertThat(inDb).isEmpty();
         assertThat(inDb.size()).isEqualTo(0);

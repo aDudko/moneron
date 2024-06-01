@@ -1,19 +1,20 @@
 package net.dudko.microservice.service;
 
+import net.dudko.microservice.model.dto.ApiResponseDto;
 import net.dudko.microservice.model.dto.ExpenseDto;
 
 import java.util.List;
 
 public interface ExpenseService {
 
-    ExpenseDto createExpense(ExpenseDto expenseDto);
+    ExpenseDto create(ExpenseDto expenseDto);
 
-    ExpenseDto getExpenseById(Long id);
+    ApiResponseDto getById(Long id);
 
-    List<ExpenseDto> getExpenses();
+    List<ExpenseDto> getAll();
 
-    ExpenseDto updateExpense(Long id, ExpenseDto expenseDto);
+    ExpenseDto update(Long id, ExpenseDto expenseDto);
 
-    void deleteExpense(Long id);
+    void delete(Long id);
 
 }

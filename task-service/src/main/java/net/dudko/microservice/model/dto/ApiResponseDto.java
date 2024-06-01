@@ -31,8 +31,8 @@ public class ApiResponseDto {
     private OfficeDto officeDto;
 
     @Schema(
-            description = "Associate with StaffDto"
+            description = "Associate with EmployeeDto"
     )
-    private StaffDto staffDto;
+    private EmployeeDto employeeDto;
 
 }

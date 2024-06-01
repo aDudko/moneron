@@ -1,33 +1,26 @@
 package net.dudko.microservice.domain.mapper;
 
-import net.dudko.microservice.domain.entity.Category;
 import net.dudko.microservice.domain.entity.Expense;
-import net.dudko.microservice.model.dto.CategoryDto;
 import net.dudko.microservice.model.dto.ExpenseDto;
 
 public class ExpenseMapper {
 
     public static Expense mapToExpense(ExpenseDto expenseDto) {
         return Expense.builder()
-                .id(expenseDto.id())
-                .amount(expenseDto.amount())
-                .expenseDate(expenseDto.expenseDate())
-                .category(Category.builder()
-                        .id(expenseDto.categoryDto().id())
-                        .build())
+                .id(expenseDto.getId())
+                .amount(expenseDto.getAmount())
+                .expenseDate(expenseDto.getExpenseDate())
+                .categoryName(expenseDto.getCategoryName())
                 .build();
     }
 
     public static ExpenseDto maptoExpenseDto(Expense expense) {
-        return new ExpenseDto(
-                expense.getId(),
-                expense.getAmount(),
-                expense.getExpenseDate(),
-                new CategoryDto(
-                        expense.getCategory().getId(),
-                        expense.getCategory().getName()
-                )
-        );
+        return ExpenseDto.builder()
+                .id(expense.getId())
+                .amount(expense.getAmount())
+                .expenseDate(expense.getExpenseDate())
+                .categoryName(expense.getCategoryName())
+                .build();
     }
 
 }

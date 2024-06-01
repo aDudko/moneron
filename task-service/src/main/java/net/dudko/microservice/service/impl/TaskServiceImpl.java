@@ -7,8 +7,8 @@ import net.dudko.microservice.domain.repository.TaskRepository;
 import net.dudko.microservice.model.dto.ApiResponseDto;
 import net.dudko.microservice.model.dto.DepartmentDto;
 import net.dudko.microservice.model.dto.OfficeDto;
-import net.dudko.microservice.model.dto.StaffDto;
-import net.dudko.microservice.model.dto.StaffStatus;
+import net.dudko.microservice.model.dto.EmployeeDto;
+import net.dudko.microservice.model.dto.EmployeeStatus;
 import net.dudko.microservice.model.dto.TaskDto;
 import net.dudko.microservice.model.dto.TaskStatus;
 import net.dudko.microservice.model.exception.ResourceNotFoundException;
@@ -53,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
                 .taskDto(TaskMapper.mapToTaskDto(inDb))
                 .departmentDto(inDepartmentService)
                 .officeDto(inOfficeService)
-                .staffDto(inStaffService)
+                .employeeDto(inStaffService)
                 .build();
     }
 
@@ -92,11 +92,11 @@ public class TaskServiceImpl implements TaskService {
                 .code("DF")
                 .created(LocalDateTime.now())
                 .build();
-        var inStaffService = StaffDto.builder()
+        var inStaffService = EmployeeDto.builder()
                 .firstName("Default First Name")
                 .lastName("Default Last Name")
                 .email("You see this email, because staff-service not available. Contact Support")
-                .status(StaffStatus.DELETED)
+                .status(EmployeeStatus.DELETED)
                 .departmentCode(inDepartmentService.getCode())
                 .officeCode(inOfficeService.getCode())
                 .build();
@@ -104,7 +104,7 @@ public class TaskServiceImpl implements TaskService {
                 .taskDto(TaskMapper.mapToTaskDto(inDb))
                 .departmentDto(inDepartmentService)
                 .officeDto(inOfficeService)
-                .staffDto(inStaffService)
+                .employeeDto(inStaffService)
                 .build();
     }
 

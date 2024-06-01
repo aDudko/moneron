@@ -138,7 +138,7 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get all Staff when Staff exist")
+    @DisplayName(testNamePrefix + "Test for get Staff when Staff exist")
     public void givenStaff_whenGetStaff_thenReturnListOfEmployeeDto() {
         given(repository.findAll()).willReturn(List.of(entity));
         var inDb = service.getStaff();
@@ -148,7 +148,7 @@ class StaffServiceTest {
     }
 
     @Test
-    @DisplayName(testNamePrefix + "Test for get all Staff when Staff not exist")
+    @DisplayName(testNamePrefix + "Test for get Staff when Staff not exist")
     public void givenStaff_whenGetStaff_thenReturnEmptyList() {
         given(repository.findAll()).willReturn(Collections.emptyList());
         var inDb = service.getStaff();

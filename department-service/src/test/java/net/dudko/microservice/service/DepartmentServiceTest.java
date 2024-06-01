@@ -101,7 +101,7 @@ class DepartmentServiceTest {
     @DisplayName(testNamePrefix + "Test for get Department by code when Department exist")
     public void givenDepartmentCode_whenGetDepartmentByCode_thenReturnDepartmentDto() {
         given(repository.existsByCode(entity.getCode())).willReturn(Boolean.TRUE);
-        given(repository.findDepartmentByCode(entity.getCode())).willReturn(entity);
+        given(repository.findByCode(entity.getCode())).willReturn(entity);
         var inDb = service.getByCode(dto.getCode());
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
@@ -117,7 +117,7 @@ class DepartmentServiceTest {
         var message = assertThrows(ResourceNotFoundException.class, () -> {
             service.getByCode(dto.getCode());
         }).getMessage();
-        assertThat(message).isEqualTo(String.format("Department with code: %s not found!", entity.getCode()));
+        assertThat(message).isEqualTo(String.format("Department with code: %s not found", entity.getCode()));
     }
 
     @Test
@@ -159,8 +159,8 @@ class DepartmentServiceTest {
     @DisplayName(testNamePrefix + "Test for update Department when Department not exist")
     public void givenDepartmentDto_whenUpdateDepartment_thenReturnException() {
         given(repository.findById(entity.getId())).willReturn(Optional.empty());
-        entity.setName("Updated Name");
-        entity.setDescription("Updated Description");
+        entity.setName("Not Exist");
+        entity.setDescription("Not Exist");
         var message = assertThrows(ResourceNotFoundException.class, () -> {
             service.update(dto.getId(), DepartmentMapper.mapToDepartmentDto(entity));
         }).getMessage();

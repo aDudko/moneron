@@ -64,7 +64,7 @@ class DepartmentRepositoryTest extends AbstractContainerBaseTest {
     @DisplayName(testNamePrefix + "Test for find exist Department by code")
     public void givenFindByCode_whenDepartmentExist_thenReturnDepartment() {
         entityManager.persist(entity);
-        var inDb = repository.findDepartmentByCode(entity.getCode());
+        var inDb = repository.findByCode(entity.getCode());
         assertThat(inDb).isNotNull();
         assertThat(inDb.getId()).isNotNull();
         assertThat(inDb.getName()).isEqualTo(entity.getName());
@@ -75,7 +75,7 @@ class DepartmentRepositoryTest extends AbstractContainerBaseTest {
     @Test
     @DisplayName(testNamePrefix + "Test for find not exist Department by code")
     public void givenFindByCode_whenDepartmentNotExist_thenReturnNull() {
-        var inDb = repository.findDepartmentByCode("not-exist");
+        var inDb = repository.findByCode("not-exist");
         assertThat(inDb).isNull();
     }
 

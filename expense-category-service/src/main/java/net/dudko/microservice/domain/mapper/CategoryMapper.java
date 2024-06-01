@@ -6,14 +6,17 @@ import net.dudko.microservice.model.dto.CategoryDto;
 public class CategoryMapper {
 
     public static Category mapToCategory(CategoryDto categoryDto) {
-        return new Category(categoryDto.id(),
-                categoryDto.name());
+        return Category.builder()
+                .id(categoryDto.getId())
+                .name(categoryDto.getName())
+                .build();
     }
 
     public static CategoryDto mapToCategoryDto(Category category) {
-        return new CategoryDto(category.getId(),
-                category.getName()
-        );
+        return CategoryDto.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .build();
     }
 
 }
