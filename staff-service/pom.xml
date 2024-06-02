@@ -106,6 +106,7 @@
 			<artifactId>feign-micrometer</artifactId>
 		</dependency>
 
+		<!-- CLEAN CODE -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

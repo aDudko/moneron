@@ -11,7 +11,7 @@
 
 	<groupId>net.dudko.microservice</groupId>
 	<artifactId>config-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>config-server</name>
 	<description>Config Server for Moneron</description>
 
