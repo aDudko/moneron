@@ -12,7 +12,7 @@
 
     <groupId>net.dudko.microservice</groupId>
     <artifactId>expense-category-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>expense-category-service</name>
     <description>Microservice for expense category service of Moneron</description>
     <packaging>jar</packaging>
@@ -88,6 +88,7 @@
             <artifactId>feign-micrometer</artifactId>
         </dependency>
 
+        <!-- CLEAN CODE -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>net.dudko.microservice</groupId>
+    <artifactId>moneron</artifactId>
+    <version>0.0.1</version>
+    <description>Artifactory for Moneron</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>service-registry</module>
+        <module>config-server</module>
+        <module>api-gateway</module>
+        <module>expense-tracker</module>
+        <module>department-service</module>
+        <module>expense-category-service</module>
+        <module>office-service</module>
+        <module>staff-service</module>
+        <module>task-service</module>
+    </modules>
+
+</project>

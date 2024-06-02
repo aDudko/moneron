@@ -12,7 +12,7 @@
 
     <groupId>net.dudko.microservice</groupId>
     <artifactId>expense-tracker</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.1</version>
     <name>expense-tracker</name>
     <description>Microservice for expense tracker of Moneron</description>
     <packaging>jar</packaging>
@@ -106,6 +106,7 @@
             <artifactId>feign-micrometer</artifactId>
         </dependency>
 
+        <!-- CLEAN CODE -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

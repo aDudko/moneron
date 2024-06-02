@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import net.dudko.microservice.model.dto.OfficeDto;
 import net.dudko.microservice.service.OfficeService;
 import org.springframework.http.HttpStatus;
