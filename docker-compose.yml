@@ -3,9 +3,6 @@ version: '3.8'
 services:
 
   db:
-    profiles:
-      - dev
-      - docker
     image: postgres:latest
     container_name: db
     restart: always
@@ -20,9 +17,6 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   rabbitmq:
-    profiles:
-      - dev
-      - docker
     image: rabbitmq:latest
     container_name: rabbitmq
     restart: always
@@ -36,181 +30,12 @@ services:
       - rabbitmq
 
   zipkin:
-    profiles:
-      - dev
-      - docker
     image: openzipkin/zipkin:latest
     container_name: zipkin
     environment:
       - "STORAGE_TYPE=mem"
     ports:
       - "9411:9411"
-
-  service-registry:
-    profiles:
-      - docker
-    build:
-      dockerfile: service-registry/Dockerfile
-    container_name: service-registry
-    ports:
-      - "8761:8761"
-    depends_on:
-      - rabbitmq
-      - zipkin
-    links:
-      - rabbitmq
-      - zipkin
-
-  api-gateway:
-    profiles:
-      - docker
-    build:
-      dockerfile: api-gateway/Dockerfile
-    container_name: api-gateway
-    ports:
-      - "9191:9191"
-    depends_on:
-      - service-registry
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-
-  config-server:
-    profiles:
-      - docker
-    build:
-      dockerfile: config-server/Dockerfile
-    container_name: config-server
-    ports:
-      - "8888:8888"
-    depends_on:
-      - service-registry
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-
-  department-service:
-    profiles:
-      - docker
-    build:
-      dockerfile: department-service/Dockerfile
-    container_name: department-service
-    ports:
-      - "8081:8081"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-
-  expense-category-service:
-    profiles:
-      - docker
-    build:
-      dockerfile: expense-category-service/Dockerfile
-    container_name: expense-category-service
-    ports:
-      - "8086:8086"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-
-  expense-tracker:
-    profiles:
-      - docker
-    build:
-      dockerfile: expense-tracker/Dockerfile
-    container_name: expense-tracker
-    ports:
-      - "8083:8083"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-      - expense-category-service
-
-  office-service:
-    profiles:
-      - docker
-    build:
-      dockerfile: office-service/Dockerfile
-    container_name: office-service
-    ports:
-      - "8084:8084"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-
-  staff-service:
-    profiles:
-      - docker
-    build:
-      dockerfile: staff-service/Dockerfile
-    container_name: staff-service
-    ports:
-      - "8082:8082"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-      - department-service
-      - office-service
-
-  task-service:
-    profiles:
-      - docker
-    build:
-      dockerfile: task-service/Dockerfile
-    container_name: task-service
-    ports:
-      - "8085:8085"
-    depends_on:
-      - db
-      - api-gateway
-      - config-server
-    links:
-      - rabbitmq
-      - zipkin
-      - service-registry
-      - api-gateway
-      - config-server
-      - department-service
-      - office-service
-      - staff-service
-
 
 networks:
   rabbitmq:
