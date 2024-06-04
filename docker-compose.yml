@@ -37,6 +37,41 @@ services:
     ports:
       - "9411:9411"
 
+  config-server:
+    image: anatolydudko/config-server:3.2.5
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    environment:
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      CONFIG_SERVER_GIT_URI: https://github.com/aDudko/config-repo.git
+      CONFIG_SERVER_GIT_USERNAME: ''
+      CONFIG_SERVER_GIT_PASSWORD: ''
+      CONFIG_SERVER_GIT_BRANCH: moneron-docker
+
+  eureka-server:
+    image: anatolydudko/eureka-server:3.2.5
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
+      CONFIG_SERVER_URL: http://config-server:8888
+
+  api-gateway:
+    image: anatolydudko/api-gateway:3.2.5
+    container_name: api-gateway
+    ports:
+      - "8787:8787"
+    depends_on:
+      - rabbitmq
+      - zipkin
+      - eureka-server
+    environment:
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+
 networks:
   rabbitmq:
     driver: bridge
