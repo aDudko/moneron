@@ -6,12 +6,12 @@ services:
     image: postgres:latest
     container_name: storage
     restart: always
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: moneron
-    ports:
-      - 5432:5432
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres_data:/var/lib/postgresql/data
@@ -35,13 +35,13 @@ services:
     image: openzipkin/zipkin:latest
     container_name: zipkin
     restart: always
+    ports:
+      - 9411:9411
     environment:
       STORAGE_TYPE: mem
       RABBIT_URI: amqp://guest:guest@rabbitmq:5672
     depends_on:
       - rabbitmq
-    ports:
-      - 9411:9411
     networks:
       - metrics
 
@@ -64,11 +64,11 @@ services:
     container_name: eureka-server
     ports:
       - 8761:8761
-    depends_on:
-      - config-server
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       CONFIG_SERVER_URL: http://config-server:8888
+    depends_on:
+      - config-server
     networks:
       - cloud
 
@@ -77,16 +77,16 @@ services:
     container_name: api-gateway
     ports:
       - 8787:8787
-    depends_on:
-      - rabbitmq
-      - zipkin
-      - eureka-server
     environment:
       EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
       RABBIT_URI: amqp://guest:guest@rabbitmq:5672
       SPRING_RABBITMQ_HOST: rabbitmq
       SPRING_ZIPKIN_SENDER_TYPE: rabbit
       ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+    depends_on:
+      - rabbitmq
+      - zipkin
+      - eureka-server
     networks:
       - cloud
       - metrics

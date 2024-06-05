@@ -1,0 +1,768 @@
+{
+	"info": {
+		"_postman_id": "74ba506a-e48a-47b1-bb86-ed7b738ebf18",
+		"name": "moneron",
+		"description": "Collection of request REST API for Moneron",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27659715"
+	},
+	"item": [
+		{
+			"name": "department-service",
+			"item": [
+				{
+					"name": "createDepartment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Name\",\n    \"description\": \"Test Description\",\n    \"code\": \"TC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/department-service/department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department-service",
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartmentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/department-service/department/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department-service",
+								"department",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartmentByCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/department-service/department/code/TC",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department-service",
+								"department",
+								"code",
+								"TC"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDepartments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/department-service/department",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department-service",
+								"department"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateDepartment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"Updated Name\",\n    \"description\": \"Updated Description\",\n    \"code\": \"UC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/department-service/department/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"department-service",
+								"department",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of request for check department service REST API and example building requests"
+		},
+		{
+			"name": "expense-category-service",
+			"item": [
+				{
+					"name": "createCategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TestCategory\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoryById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategoryByName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category/name/TestCategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category",
+								"name",
+								"TestCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCategory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 9,\n    \"name\": \"TC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-category-service/category/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-category-service",
+								"category",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of request for check expense category service REST API and example building requests"
+		},
+		{
+			"name": "expense-tracker",
+			"item": [
+				{
+					"name": "createExpense",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"amount\": \"50.0\",\n    \"expenseDate\": \"2024-06-01\",\n    \"categoryName\": \"rent\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/expense-tracker/expense",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-tracker",
+								"expense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getExpense",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-tracker/expense/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-tracker",
+								"expense",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getExpenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-tracker/expense",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-tracker",
+								"expense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateExpense",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"amount\": \"100.0\",\n    \"expenseDate\": \"2020-06-01\",\n    \"categoryName\": \"shopping\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/expense-tracker/expense/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-tracker",
+								"expense",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteExpense",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/expense-tracker/expense/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"expense-tracker",
+								"expense",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of request for check expense tracker REST API and example building requests"
+		},
+		{
+			"name": "office-service",
+			"item": [
+				{
+					"name": "createOffice",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Name\",\n    \"description\": \"Test Description\",\n    \"code\": \"OC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/office-service/office",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"office-service",
+								"office"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOfficeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/office-service/office/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"office-service",
+								"office",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOfficeByCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/office-service/office/code/OC",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"office-service",
+								"office",
+								"code",
+								"OC"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of request for check office service REST API and example building requests"
+		},
+		{
+			"name": "staff-service",
+			"item": [
+				{
+					"name": "createEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"First Name\",\n    \"lastName\": \"Last Name\",\n    \"email\": \"first@gmail.com\",\n    \"departmentCode\": \"IT\",\n    \"officeCode\": \"001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeeById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployeeByEmail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff/email/first@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff",
+								"email",
+								"first@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStaff",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEmployee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 3,\n    \"firstName\": \"Updated First Name\",\n    \"lastName\": \"Updated Last Name\",\n    \"email\": \"updated@gmail.com\",\n    \"status\": \"CREATED\",\n    \"departmentCode\": \"TC\",\n    \"officeCode\": \"OC\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEmployee",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/staff-service/staff/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff-service",
+								"staff",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of requuest for check staff service REST API and example building requests"
+		},
+		{
+			"name": "task-service",
+			"item": [
+				{
+					"name": "createTask",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Title\",\n    \"description\": \"Description\",\n    \"status\": \"TODO\",\n    \"departmentCode\": \"IT\",\n    \"officeCode\": \"OC\",\n    \"employeeEmail\": \"test_staff@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/task-service/task",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"task-service",
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaskById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/task-service/task/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"task-service",
+								"task",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllByEmployeeEmail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/task-service/task/email/test_staff@gmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"task-service",
+								"task",
+								"email",
+								"test_staff@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateTask",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"title\": \"Updated title\",\n    \"description\": \"Updated description\",\n    \"status\": \"TESTING\",\n    \"departmentCode\": \"IT\",\n    \"officeCode\": \"OC\",\n    \"employeeEmail\": \"test_staff@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/task-service/task/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"task-service",
+								"task",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteTask",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/task-service/task/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"task-service",
+								"task",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Collection of request for check task service REST API and example building requests"
+		},
+		{
+			"name": "busrefresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/actuator/busrefresh",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"actuator",
+						"busrefresh"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{login}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
