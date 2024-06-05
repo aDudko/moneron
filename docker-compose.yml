@@ -2,78 +2,264 @@ version: '3.8'
 
 services:
 
-  db:
+  storage:
     image: postgres:latest
-    container_name: db
+    container_name: storage
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: moneron
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - net-db
 
   rabbitmq:
     image: rabbitmq:latest
     container_name: rabbitmq
     restart: always
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - 5672:5672
+      - 15672:15672
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - rabbitmq
+      - metrics
 
   zipkin:
     image: openzipkin/zipkin:latest
     container_name: zipkin
+    restart: always
     environment:
-      - "STORAGE_TYPE=mem"
+      STORAGE_TYPE: mem
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
     ports:
-      - "9411:9411"
+      - 9411:9411
+    networks:
+      - metrics
 
   config-server:
     image: anatolydudko/config-server:3.2.5
     container_name: config-server
     ports:
-      - "8888:8888"
+      - 8888:8888
     environment:
       EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
       CONFIG_SERVER_GIT_URI: https://github.com/aDudko/config-repo.git
       CONFIG_SERVER_GIT_USERNAME: ''
       CONFIG_SERVER_GIT_PASSWORD: ''
       CONFIG_SERVER_GIT_BRANCH: moneron-docker
+    networks:
+      - cloud
 
   eureka-server:
     image: anatolydudko/eureka-server:3.2.5
     container_name: eureka-server
     ports:
-      - "8761:8761"
+      - 8761:8761
     depends_on:
       - config-server
     environment:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
       CONFIG_SERVER_URL: http://config-server:8888
+    networks:
+      - cloud
 
   api-gateway:
     image: anatolydudko/api-gateway:3.2.5
     container_name: api-gateway
     ports:
-      - "8787:8787"
+      - 8787:8787
     depends_on:
       - rabbitmq
       - zipkin
       - eureka-server
     environment:
       EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+    networks:
+      - cloud
+      - metrics
+
+  department-service:
+    build:
+      dockerfile: department-service/Dockerfile
+    image: department-service
+    container_name: department-service
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
+  expense-category-service:
+    build:
+      dockerfile: expense-category-service/Dockerfile
+    image: expense-category-service
+    container_name: expense-category-service
+    restart: always
+    ports:
+      - 8086:8086
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
+  office-service:
+    build:
+      dockerfile: office-service/Dockerfile
+    image: office-service
+    container_name: office-service
+    restart: always
+    ports:
+      - 8084:8084
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
+  expense-tracker:
+    build:
+      dockerfile: expense-tracker/Dockerfile
+    image: expense-tracker
+    container_name: expense-tracker
+    restart: always
+    ports:
+      - 8083:8083
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+      - expense-category-service
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
+  staff-service:
+    build:
+      dockerfile: staff-service/Dockerfile
+    image: staff-service
+    container_name: staff-service
+    restart: always
+    ports:
+      - 8082:8082
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+      - department-service
+      - office-service
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
+  task-service:
+    build:
+      dockerfile: task-service/Dockerfile
+    image: task-service
+    container_name: task-service
+    restart: always
+    ports:
+      - 8085:8085
+    environment:
+      CONFIG_SERVER_URL: configserver:http://config-server:8888
+      EUREKA_SERVICE_URL: http://eureka-server:8761/eureka/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      ZIPKIN_URL: http://zipkin:9411/api/v2/spans
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+    depends_on:
+      - storage
+      - rabbitmq
+      - zipkin
+      - config-server
+      - eureka-server
+      - api-gateway
+      - department-service
+      - office-service
+      - staff-service
+    networks:
+      - cloud
+      - metrics
+      - net-db
+
 
 networks:
-  rabbitmq:
+  metrics:
+    driver: bridge
+  net-db:
+    driver: bridge
+  cloud:
     driver: bridge
 
 volumes:

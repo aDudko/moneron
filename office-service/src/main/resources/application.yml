@@ -1,8 +1,0 @@
-server:
-  port: '8084'
-
-spring:
-  application:
-    name: OFFICE-SERVICE
-  config:
-    import: optional:configserver:http://localhost:8888

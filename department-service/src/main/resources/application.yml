@@ -1,8 +1,0 @@
-server:
-  port: '8081'
-
-spring:
-  application:
-    name: DEPARTMENT-SERVICE
-  config:
-    import: optional:configserver:http://localhost:8888
